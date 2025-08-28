@@ -13,3 +13,68 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  prenom    String
+  nom       String
+  email     String   @unique
+  pass      String
+  role      Boolean  @default(false) // false = user 0, true = admin 1
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  commandes Commande[]
+}
+
+model CafeGrain {
+  id          Int     @id @default(autoincrement())
+  nom         String
+  type        String?
+  origine     String?
+  quantite    String?
+  description String?
+  prix        Float?
+  image       String?
+
+  items CommandeItem[]
+}
+
+model CafeMoulu {
+  id          Int     @id @default(autoincrement())
+  nom         String
+  type        String?
+  origine     String?
+  quantite    String?
+  description String?
+  prix        Float?
+  image       String?
+
+  items CommandeItem[]
+}
+
+model Commande {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  prix      Float
+  adresse   String
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User           @relation(fields: [userId], references: [id])
+  items CommandeItem[]
+}
+
+model CommandeItem {
+  id          Int   @id @default(autoincrement())
+  commandeId  Int
+  cafeGrainId Int?
+  cafeMouluId Int?
+  quantite    Int
+  prix        Float
+
+  commande  Commande   @relation(fields: [commandeId], references: [id])
+  cafeGrain CafeGrain? @relation(fields: [cafeGrainId], references: [id])
+  cafeMoulu CafeMoulu? @relation(fields: [cafeMouluId], references: [id])
+}

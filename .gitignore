@@ -1,5 +1,48 @@
-node_modules
-# Keep environment variables out of version control
-.env
+# Consolidated ignore rules for the repo (root + nested app)
 
+# Dependencies
+**/node_modules
+/.pnp
+.pnp.*
+
+# Yarn (if ever used)
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Testing
+**/coverage
+
+# Next.js build outputs
+**/.next/
+**/out/
+
+# Production build
+**/build
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment files (keep out of VCS)
+.env
+.env*
+.env.local
+
+# Vercel
+**/.vercel
+
+# TypeScript
+*.tsbuildinfo
+**/next-env.d.ts
+
+# Prisma generated (if used)
 /generated/prisma
