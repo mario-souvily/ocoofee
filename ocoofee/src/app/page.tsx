@@ -1,4 +1,4 @@
-
+import Image from "next/image";
 export default async function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
@@ -77,7 +77,7 @@ export default async function Home() {
             {/* Coffee Card 1 */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="h-48 bg-gradient-to-br from-amber-200 to-orange-300 flex items-center justify-center">
-                <span className="text-4xl">☕</span>
+                <Image src="/image/cafe_grain/ethiopie-moka.jpg" alt="Éthiopie Moka" width={200} height={200} />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2 text-amber-800">
@@ -98,7 +98,7 @@ export default async function Home() {
             {/* Coffee Card 2 */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="h-48 bg-gradient-to-br from-amber-200 to-orange-300 flex items-center justify-center">
-                <span className="text-4xl">☕</span>
+                <Image src="/images/colombie-supremo.jpg" alt="Colombie Supremo" width={40} height={40} />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2 text-amber-800">

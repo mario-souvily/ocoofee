@@ -34,7 +34,7 @@ async function main() {
         description:
           "Un café floral et fruité aux notes de jasmin et bergamote.",
         prix: 8.9,
-        image: "ethiopie-moka.jpg",
+        image: "/images/ethiopie-moka.jpg",
       },
       {
         nom: "Café en grain Colombie Supremo",
