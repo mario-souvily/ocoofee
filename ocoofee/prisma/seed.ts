@@ -7,6 +7,9 @@ async function main() {
   await prisma.cafeGrain.deleteMany();
   await prisma.cafeMoulu.deleteMany();
 
+  await prisma.$executeRaw`ALTER TABLE user AUTO_INCREMENT = 1`;
+  await prisma.$executeRaw`ALTER TABLE cafeGrain AUTO_INCREMENT = 1`;
+  await prisma.$executeRaw`ALTER TABLE cafeMoulu AUTO_INCREMENT = 1`;
   // === Users ===
   await prisma.user.createMany({
     data: [
