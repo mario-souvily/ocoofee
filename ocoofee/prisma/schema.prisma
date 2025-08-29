@@ -26,28 +26,16 @@ model User {
   commandes Commande[]
 }
 
-model CafeGrain {
-  id          Int     @id @default(autoincrement())
+model Cafe {
+  id          Int    @id @default(autoincrement())
   nom         String
-  type        String?
-  origine     String?
-  quantite    String?
-  description String?
-  prix        Float?
-  image       String?
-
-  items CommandeItem[]
-}
-
-model CafeMoulu {
-  id          Int     @id @default(autoincrement())
-  nom         String
-  type        String?
-  origine     String?
-  quantite    String?
-  description String?
-  prix        Float?
-  image       String?
+  type        String
+  origine     String
+  quantite    String
+  description String
+  prix        Float
+  image       String
+  categorie   String // "grain" | "moulu"
 
   items CommandeItem[]
 }
@@ -66,14 +54,12 @@ model Commande {
 }
 
 model CommandeItem {
-  id          Int   @id @default(autoincrement())
-  commandeId  Int
-  cafeGrainId Int?
-  cafeMouluId Int?
-  quantite    Int
-  prix        Float
+  id         Int   @id @default(autoincrement())
+  commandeId Int
+  cafeId     Int
+  quantite   Int
+  prix       Float
 
-  commande  Commande   @relation(fields: [commandeId], references: [id])
-  cafeGrain CafeGrain? @relation(fields: [cafeGrainId], references: [id])
-  cafeMoulu CafeMoulu? @relation(fields: [cafeMouluId], references: [id])
+  commande Commande @relation(fields: [commandeId], references: [id])
+  cafe     Cafe     @relation(fields: [cafeId], references: [id])
 }

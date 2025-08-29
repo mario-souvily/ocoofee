@@ -4,12 +4,10 @@ async function main() {
   console.log("🚀 Seeding database...");
 
   await prisma.user.deleteMany();
-  await prisma.cafeGrain.deleteMany();
-  await prisma.cafeMoulu.deleteMany();
+  await prisma.cafe.deleteMany();
 
   await prisma.$executeRaw`ALTER TABLE user AUTO_INCREMENT = 1`;
-  await prisma.$executeRaw`ALTER TABLE cafeGrain AUTO_INCREMENT = 1`;
-  await prisma.$executeRaw`ALTER TABLE cafeMoulu AUTO_INCREMENT = 1`;
+  await prisma.$executeRaw`ALTER TABLE cafe AUTO_INCREMENT = 1`;
   // === Users ===
   await prisma.user.createMany({
     data: [
@@ -39,7 +37,7 @@ async function main() {
       description: "Un café floral et fruité aux notes de jasmin et bergamote.",
       prix: 8.9,
       image: "/images/ethiopie-moka.jpg",
-      table: "grain",
+      categorie: "grain",
     },
     {
       nom: "Café en grain Colombie Supremo",
@@ -49,7 +47,7 @@ async function main() {
       description: "Café doux avec des notes de noisette et chocolat.",
       prix: 12.5,
       image: "colombie-supremo.jpg",
-      table: "grain",
+      categorie: "grain",
     },
     {
       nom: "Café en grain Brésil Santos",
@@ -59,7 +57,7 @@ async function main() {
       description: "Café équilibré, rond et légèrement chocolaté.",
       prix: 7.9,
       image: "bresil-santos.jpg",
-      table: "grain",
+      categorie: "grain",
     },
     {
       nom: "Café en grain Kenya AA",
@@ -69,7 +67,7 @@ async function main() {
       description: "Café corsé, acidité vive, notes fruitées.",
       prix: 9.5,
       image: "kenya-aa.jpg",
-      table: "grain",
+      categorie: "grain",
     },
     {
       nom: "Café en grain Guatemala Antigua",
@@ -79,7 +77,7 @@ async function main() {
       description: "Café gourmand avec notes de cacao et fruits secs.",
       prix: 10.2,
       image: "guatemala-antigua.jpg",
-      table: "grain",
+      categorie: "grain",
     },
     {
       nom: "Café en grain Costa Rica Tarrazu",
@@ -89,7 +87,7 @@ async function main() {
       description: "Café équilibré aux notes d’agrumes et miel.",
       prix: 11.0,
       image: "costa-rica-tarrazu.jpg",
-      table: "grain",
+      categorie: "grain",
     },
     {
       nom: "Café en grain Inde Malabar Moussonné",
@@ -99,7 +97,7 @@ async function main() {
       description: "Café puissant et épicé avec faible acidité.",
       prix: 8.5,
       image: "inde-malabar.jpg",
-      table: "grain",
+      categorie: "grain",
     },
     {
       nom: "Café en grain Pérou Bio",
@@ -109,7 +107,7 @@ async function main() {
       description: "Café bio équilibré, notes de caramel et noix.",
       prix: 9.9,
       image: "perou-bio.jpg",
-      table: "grain",
+      categorie: "grain",
     },
     {
       nom: "Café en grain Honduras SHG",
@@ -119,7 +117,7 @@ async function main() {
       description: "Café doux, notes de miel et chocolat au lait.",
       prix: 8.7,
       image: "honduras-shg.jpg",
-      table: "grain",
+      categorie: "grain",
     },
     {
       nom: "Café en grain Mexique Altura",
@@ -129,7 +127,7 @@ async function main() {
       description: "Café doux, légèrement fruité et floral.",
       prix: 9.2,
       image: "mexique-altura.jpg",
-      table: "grain",
+      categorie: "grain",
     },
     {
       nom: "Café moulu Brésil Santos",
@@ -139,7 +137,7 @@ async function main() {
       description: "Café équilibré, idéal pour espresso.",
       prix: 7.9,
       image: "bresil-santos.jpg",
-      table: "moulu",
+      categorie: "moulu",
     },
 
     {
@@ -150,7 +148,7 @@ async function main() {
       description: "Café corsé, acidité vive et notes fruitées.",
       prix: 9.5,
       image: "kenya-aa.jpg",
-      table: "moulu",
+      categorie: "moulu",
     },
     {
       nom: "Café moulu Colombie Excelso",
@@ -160,7 +158,7 @@ async function main() {
       description: "Café équilibré avec une douceur chocolatée.",
       prix: 8.8,
       image: "colombie-excelso.jpg",
-      table: "moulu",
+      categorie: "moulu",
     },
     {
       nom: "Café moulu Ethiopie Sidamo",
@@ -170,7 +168,7 @@ async function main() {
       description: "Café floral avec des notes fruitées délicates.",
       prix: 9.2,
       image: "ethiopie-sidamo.jpg",
-      table: "moulu",
+      categorie: "moulu",
     },
     {
       nom: "Café moulu Guatemala Huehuetenango",
@@ -180,7 +178,7 @@ async function main() {
       description: "Café complexe avec notes de cacao et caramel.",
       prix: 10.1,
       image: "guatemala-huehuetenango.jpg",
-      table: "moulu",
+      categorie: "moulu",
     },
     {
       nom: "Café moulu Pérou Bio",
@@ -190,7 +188,7 @@ async function main() {
       description: "Café bio, équilibré et légèrement sucré.",
       prix: 9.4,
       image: "perou-bio.jpg",
-      table: "moulu",
+      categorie: "moulu",
     },
     {
       nom: "Café moulu Inde Plantation",
@@ -200,7 +198,7 @@ async function main() {
       description: "Café corsé avec des notes épicées.",
       prix: 8.3,
       image: "inde-plantation.jpg",
-      table: "moulu",
+      categorie: "moulu",
     },
     {
       nom: "Café moulu Honduras Marcala",
@@ -210,7 +208,7 @@ async function main() {
       description: "Café doux, arômes de noisette et miel.",
       prix: 8.9,
       image: "honduras-marcala.jpg",
-      table: "moulu",
+      categorie: "moulu",
     },
     {
       nom: "Café moulu Costa Rica",
@@ -220,7 +218,7 @@ async function main() {
       description: "Café vif, notes d’agrumes et miel.",
       prix: 9.6,
       image: "costa-rica.jpg",
-      table: "moulu",
+      categorie: "moulu",
     },
     {
       nom: "Café moulu Mexique Chiapas",
@@ -230,21 +228,11 @@ async function main() {
       description: "Café équilibré, légèrement fruité.",
       prix: 9.0,
       image: "mexique-chiapas.jpg",
-      table: "moulu",
+      categorie: "moulu",
     },
   ];
 
-  const grains = cafes
-    .filter((c) => c.table === "grain")
-    .map(({ table, ...c }) => c);
-  const moulus = cafes
-    .filter((c) => c.table === "moulu")
-    .map(({ table, ...c }) => c);
-
-  await Promise.all([
-    prisma.cafeGrain.createMany({ data: grains }),
-    prisma.cafeMoulu.createMany({ data: moulus }),
-  ]);
+  await prisma.cafe.createMany({ data: cafes });
 
   console.log("✅ Seed cafés combiné terminé !");
   console.log("✅ Seed terminé !");

@@ -1,7 +1,7 @@
 import { prisma } from "../../../lib/prisma";
 
 export async function GET() {
-  const coffees = await prisma.cafeGrain.findMany({});
+  const coffees = await prisma.cafe.findMany({});
   if (!coffees) {
     return Response.json({ error: "No coffees found" }, { status: 404 });
   } else {
@@ -10,10 +10,10 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const { nom, type, origine, quantite, description, prix, image } =
+  const { nom, type, origine, quantite, description, prix, image, categorie } =
     await req.json();
-  const coffee = await prisma.cafeGrain.create({
-    data: { nom, type, origine, quantite, description, prix, image },
+  const coffee = await prisma.cafe.create({
+    data: { nom, type, origine, quantite, description, prix, image, categorie },
   });
   return Response.json(coffee);
 }

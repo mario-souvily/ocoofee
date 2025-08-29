@@ -19,6 +19,17 @@ export interface ICoffeemoulu {
   prix: number;
   image: string;
 }
+export interface ICoffee {
+  id: number;
+  nom: string;
+  type: string;
+  origine: string;
+  quantite: string;
+  description: string;
+  prix: number;
+  image: string;
+  categorie: string;
+}
 
 export interface IUser {
   id: number;

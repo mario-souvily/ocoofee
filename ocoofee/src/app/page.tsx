@@ -87,8 +87,11 @@ export default async function Home() {
                 <p className="text-gray-600 mb-4">
                   Un café floral et fruité aux notes de jasmin et bergamote.
                 </p>
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mb-8">
                   <span className="text-2xl font-bold text-amber-600">8,90 €</span>
+                  <button className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full transition-colors">
+                    Voir le produit
+                  </button>
                   <button className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full transition-colors">
                     Ajouter
                   </button>
@@ -110,6 +113,9 @@ export default async function Home() {
                 </p>
                 <div className="flex justify-between items-center">
                   <span className="text-2xl font-bold text-amber-600">12,50 €</span>
+                  <button className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full transition-colors">
+                    Voir le produit
+                  </button>
                   <button className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full transition-colors">
                     Ajouter
                   </button>
@@ -133,8 +139,12 @@ export default async function Home() {
                 <div className="flex justify-between items-center">
                   <span className="text-2xl font-bold text-amber-600">7,90 €</span>
                   <button className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full transition-colors">
+                    Voir le produit
+                  </button>
+                  <button className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full transition-colors">
                     Ajouter
                   </button>
+
                 </div>
               </div>
             </div>
@@ -160,7 +170,7 @@ export default async function Home() {
             <input
               type="email"
               placeholder="Votre adresse email"
-              className="flex-1 px-4 py-3 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-400"
+              className="flex-1 px-4 py-3 rounded-full text-black outline-none focus:ring-2 bg-white border-2 border-white"
             />
             <button className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-full font-semibold transition-colors">
               S&apos;abonner
