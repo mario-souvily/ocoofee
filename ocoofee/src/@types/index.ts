@@ -1,0 +1,32 @@
+export interface ICoffeegrain {
+  id: number;
+  nom: string;
+  type: string;
+  origine: string;
+  quantite: string;
+  description: string;
+  prix: number;
+  image: string;
+}
+
+export interface ICoffeemoulu {
+  id: number;
+  nom: string;
+  type: string;
+  origine: string;
+  quantite: string;
+  description: string;
+  prix: number;
+  image: string;
+}
+
+export interface IUser {
+  id: number;
+  prenom: string;
+  nom: string;
+  email: string;
+  pass: string;
+  role: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}

@@ -1,5 +1,7 @@
 "use client";
 
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -48,27 +50,31 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-4">
             <Link
               href="/panier"
-              className=" hover:bg-amber-600 text-white px-4 py-2 rounded-full transition-colors flex items-center gap-2"
+              className=" bg-amber-900 shadow-lg hover:bg-amber-600 text-white px-4 py-2 rounded-full transition-colors flex items-center gap-2"
             >
-              🛒
+              <Image src="/image/shopping-cart.png" alt="Panier" width={30} height={30} />
             </Link>
+
           </div>
 
           {/* Bouton Menu Mobile */}
           <div className="lg:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-white hover:text-amber-200 transition-colors p-2"
-              aria-label="Menu"
-            >
-              {isOpen ? "✕" : "☰"}
-            </button>
+            <div className="lg:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-white hover:text-amber-200 transition-colors p-2"
+                aria-label="Menu"
+              >
+                {isOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+
           </div>
         </div>
 
         {/* Menu Mobile */}
         {isOpen && (
-          <div className="lg:hidden bg-amber-800 border-t border-amber-700">
+          <div className="lg:hidden bg-amber-900 border-t border-amber-700">
             <div className="px-4 py-6 space-y-4">
               {links.map((link) => (
                 <Link
@@ -86,7 +92,7 @@ export default function Navbar() {
                   className="block bg-amber-700 hover:bg-amber-600 text-white px-4 py-3 rounded-full transition-colors text-center font-medium"
                   onClick={() => setIsOpen(false)}
                 >
-                  🛒 Panier
+                  <Image src="/image/shopping-cart.png" alt="Panier" width={30} height={30} />
                 </Link>
               </div>
             </div>
