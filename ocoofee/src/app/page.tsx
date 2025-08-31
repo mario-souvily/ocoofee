@@ -1,47 +1,9 @@
 "use client";
-import ImageComponent from "@/ui/image";
+import { CarouselSize } from "@/ui/carousel";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-
-interface ICoffee {
-  id: number;
-  nom: string;
-  type: string;
-  origine: string;
-  quantite: string;
-  description: string;
-  prix: number;
-  image: string;
-  categorie: string;
-}
-
-
 
 export default function Home() {
-  const [coffee, setCoffee] = useState<ICoffee[]>([]);
   const router = useRouter();
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const fetchCoffee = async () => {
-      try {
-        const res = await fetch("/api/coffee");
-        const data = await res.json();
-
-        // parseInt au cas où prix est string
-        const parsed = data.map((c: ICoffee) => ({
-          ...c,
-          prix: c.prix,
-        }));
-
-        setCoffee(parsed);
-      } catch (error) {
-        console.error("Erreur lors du fetch des cafés :", error);
-      }
-    };
-
-    fetchCoffee();
-  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
@@ -120,100 +82,7 @@ export default function Home() {
           </h2>
 
           {/* Carrousel */}
-          <div className="relative">
-            {/* Boutons de navigation */}
-            <button
-              onClick={() => setCurrentIndex(prev => prev === 0 ? coffee.length - 1 : prev - 1)}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-amber-800 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-
-            <button
-              onClick={() => setCurrentIndex(prev => prev === coffee.length - 1 ? 0 : prev + 1)}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-amber-800 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-
-            {/* Carte du café actuel */}
-            {coffee.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl mx-auto">
-                <div className="grid md:grid-cols-2">
-                  {/* Image */}
-                  <div className="h-80 md:h-96 relative overflow-hidden">
-                    <ImageComponent
-                      src={coffee[currentIndex]?.image}
-                      alt={coffee[currentIndex]?.nom}
-                      width={600}
-                      height={600}
-                    />
-                    <div className="absolute top-4 left-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                      {coffee[currentIndex]?.categorie === 'grain' ? '🌱 Grain' : '☕ Moulu'}
-                    </div>
-                  </div>
-
-                  {/* Informations */}
-                  <div className="p-8 flex flex-col justify-center">
-                    <div className="mb-4">
-                      <span className="text-amber-600 font-semibold text-sm uppercase tracking-wide">
-                        {coffee[currentIndex]?.origine}
-                      </span>
-                    </div>
-                    <h3 className="text-3xl font-bold mb-4 text-amber-800">
-                      {coffee[currentIndex]?.nom}
-                    </h3>
-                    <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-                      {coffee[currentIndex]?.description}
-                    </p>
-
-                    <div className="space-y-4">
-                      <div className="flex items-center space-x-4">
-                        <span className="text-gray-500">Type:</span>
-                        <span className="font-semibold text-amber-700">{coffee[currentIndex]?.type}</span>
-                      </div>
-                      <div className="flex items-center space-x-4">
-                        <span className="text-gray-500">Quantité:</span>
-                        <span className="font-semibold text-amber-700">{coffee[currentIndex]?.quantite}</span>
-                      </div>
-                    </div>
-
-                    <div className="mt-8 flex items-center justify-between">
-                      <span className="text-4xl font-bold text-amber-600">
-                        {coffee[currentIndex]?.prix} €
-                      </span>
-                      <div className="flex space-x-3">
-                        <button className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-full transition-colors font-semibold">
-                          Voir le produit
-                        </button>
-                        <button className="bg-amber-800 hover:bg-amber-900 text-white px-6 py-3 rounded-full transition-colors font-semibold">
-                          Ajouter
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Indicateurs de position */}
-            <div className="flex justify-center mt-8 space-x-2">
-              {coffee.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentIndex
-                    ? 'bg-amber-600 scale-125'
-                    : 'bg-amber-300 hover:bg-amber-400'
-                    }`}
-                />
-              ))}
-            </div>
-          </div>
+          <CarouselSize />
 
           <div className="text-center mt-12">
             <button
@@ -227,7 +96,7 @@ export default function Home() {
       </section>
 
       {/* Newsletter Section */}
-      < section className="py-20 px-4 bg-amber-900 text-white" >
+      <section className="py-20 px-4 bg-amber-900 text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">
             Restez informé de nos nouveautés
@@ -246,10 +115,10 @@ export default function Home() {
             </button>
           </div>
         </div>
-      </section >
+      </section>
 
       {/* Footer */}
-      < footer className="bg-gray-900 text-white py-12 px-4" >
+      <footer className="bg-gray-900 text-white py-12 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <h3 className="text-2xl font-bold mb-4">Ocoofee</h3>
           <p className="text-gray-400 mb-6">
@@ -270,7 +139,7 @@ export default function Home() {
             © 2025 Mario Souvily - Tous droits réservés
           </p>
         </div>
-      </footer >
-    </div >
+      </footer>
+    </div>
   );
 }

@@ -13,9 +13,12 @@ export default function ImageComponent(props: IImageProps) {
     <Image
       src={props.src}
       alt={props.alt}
-      width={props.width}
-      height={props.height}
-      className="w-full h-full object-cover"
+      width={300}
+      height={300}
+      className=" object-cover center"
+      style={{
+        objectPosition: 'center',
+      }}
     />
   );
 }
