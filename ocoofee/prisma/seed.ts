@@ -36,7 +36,7 @@ async function main() {
       quantite: "250g",
       description: "Un café floral et fruité aux notes de jasmin et bergamote.",
       prix: 8.9,
-      image: "/images/ethiopie-moka.jpg",
+      image: "/image/cafe/ethiopie-moka.jpg",
       categorie: "grain",
     },
     {
@@ -46,7 +46,7 @@ async function main() {
       quantite: "500g",
       description: "Café doux avec des notes de noisette et chocolat.",
       prix: 12.5,
-      image: "colombie-supremo.jpg",
+      image: "/image/cafe/colombie-supremo.jpg",
       categorie: "grain",
     },
     {
@@ -56,7 +56,7 @@ async function main() {
       quantite: "250g",
       description: "Café équilibré, rond et légèrement chocolaté.",
       prix: 7.9,
-      image: "bresil-santos.jpg",
+      image: "/image/cafe/bresil-santos.jpg",
       categorie: "grain",
     },
     {
@@ -66,7 +66,7 @@ async function main() {
       quantite: "250g",
       description: "Café corsé, acidité vive, notes fruitées.",
       prix: 9.5,
-      image: "kenya-aa.jpg",
+      image: "/image/cafe/kenya-aa.jpg",
       categorie: "grain",
     },
     {
@@ -76,7 +76,7 @@ async function main() {
       quantite: "250g",
       description: "Café gourmand avec notes de cacao et fruits secs.",
       prix: 10.2,
-      image: "guatemala-antigua.jpg",
+      image: "/image/cafe/guatemala.webp",
       categorie: "grain",
     },
     {
@@ -86,7 +86,7 @@ async function main() {
       quantite: "250g",
       description: "Café équilibré aux notes d’agrumes et miel.",
       prix: 11.0,
-      image: "costa-rica-tarrazu.jpg",
+      image: "/image/cafe/costa-rica-tarrazu.webp",
       categorie: "grain",
     },
     {
@@ -96,7 +96,7 @@ async function main() {
       quantite: "250g",
       description: "Café puissant et épicé avec faible acidité.",
       prix: 8.5,
-      image: "inde-malabar.jpg",
+      image: "/image/cafe/inde-malabar.jpg",
       categorie: "grain",
     },
     {
@@ -106,7 +106,7 @@ async function main() {
       quantite: "250g",
       description: "Café bio équilibré, notes de caramel et noix.",
       prix: 9.9,
-      image: "perou-bio.jpg",
+      image: "/image/cafe/perou-bio.jpg",
       categorie: "grain",
     },
     {
@@ -116,7 +116,7 @@ async function main() {
       quantite: "250g",
       description: "Café doux, notes de miel et chocolat au lait.",
       prix: 8.7,
-      image: "honduras-shg.jpg",
+      image: "/image/cafe/honduras-shg.jpg",
       categorie: "grain",
     },
     {
@@ -126,7 +126,7 @@ async function main() {
       quantite: "250g",
       description: "Café doux, légèrement fruité et floral.",
       prix: 9.2,
-      image: "mexique-altura.jpg",
+      image: "/image/cafe/mexique-altura.jpg",
       categorie: "grain",
     },
     {
@@ -136,7 +136,7 @@ async function main() {
       quantite: "250g",
       description: "Café équilibré, idéal pour espresso.",
       prix: 7.9,
-      image: "bresil-santos.jpg",
+      image: "/image/cafe/moulu-bresil-santos.jpg",
       categorie: "moulu",
     },
 
@@ -147,7 +147,7 @@ async function main() {
       quantite: "250g",
       description: "Café corsé, acidité vive et notes fruitées.",
       prix: 9.5,
-      image: "kenya-aa.jpg",
+      image: "/image/cafe/moulu-kenya.jpg",
       categorie: "moulu",
     },
     {
@@ -157,7 +157,7 @@ async function main() {
       quantite: "250g",
       description: "Café équilibré avec une douceur chocolatée.",
       prix: 8.8,
-      image: "colombie-excelso.jpg",
+      image: "/image/cafe/colombie-excelso.jpg",
       categorie: "moulu",
     },
     {
@@ -167,7 +167,7 @@ async function main() {
       quantite: "250g",
       description: "Café floral avec des notes fruitées délicates.",
       prix: 9.2,
-      image: "ethiopie-sidamo.jpg",
+      image: "/image/cafe/ethiopoe-sidamo.jpg",
       categorie: "moulu",
     },
     {
@@ -177,7 +177,7 @@ async function main() {
       quantite: "250g",
       description: "Café complexe avec notes de cacao et caramel.",
       prix: 10.1,
-      image: "guatemala-huehuetenango.jpg",
+      image: "/image/cafe/guatemala-huehuetenango.jpg",
       categorie: "moulu",
     },
     {
@@ -187,7 +187,7 @@ async function main() {
       quantite: "250g",
       description: "Café bio, équilibré et légèrement sucré.",
       prix: 9.4,
-      image: "perou-bio.jpg",
+      image: "/image/cafe/moulu-perou-bio.jpg",
       categorie: "moulu",
     },
     {
@@ -197,7 +197,7 @@ async function main() {
       quantite: "250g",
       description: "Café corsé avec des notes épicées.",
       prix: 8.3,
-      image: "inde-plantation.jpg",
+      image: "/image/cafe/inde-plantation.jpg",
       categorie: "moulu",
     },
     {
@@ -207,7 +207,7 @@ async function main() {
       quantite: "250g",
       description: "Café doux, arômes de noisette et miel.",
       prix: 8.9,
-      image: "honduras-marcala.jpg",
+      image: "/image/cafe/honduras-marcala.jpg",
       categorie: "moulu",
     },
     {
@@ -217,7 +217,7 @@ async function main() {
       quantite: "250g",
       description: "Café vif, notes d’agrumes et miel.",
       prix: 9.6,
-      image: "costa-rica.jpg",
+      image: "/image/cafe/costa-rica.jpg",
       categorie: "moulu",
     },
     {
@@ -227,7 +227,7 @@ async function main() {
       quantite: "250g",
       description: "Café équilibré, légèrement fruité.",
       prix: 9.0,
-      image: "mexique-chiapas.jpg",
+      image: "/image/cafe/mexique-chiapas.jpg",
       categorie: "moulu",
     },
   ];
