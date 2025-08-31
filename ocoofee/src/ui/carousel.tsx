@@ -1,5 +1,6 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import CarouselSkeleton from "./carousel-skeleton";
 import ImageComponent from "./image";
 
 interface ICoffee {
@@ -55,7 +56,7 @@ export function CarouselSize() {
   };
 
   if (coffee.length === 0) {
-    return <div className="text-center py-8">Chargement des cafés...</div>;
+    return <CarouselSkeleton />;
   }
 
   return (
@@ -96,14 +97,14 @@ export function CarouselSize() {
                   <ImageComponent
                     src={coffeeItem.image}
                     alt={coffeeItem.nom}
-                    width={400}
-                    height={400}
+                    width={300}
+                    height={300}
                   />
 
                 </div>
 
                 {/* Contenu de la carte */}
-                <div className="p-4">
+                <div className="p-2">
                   <div className="mb-2">
                     <span className="text-amber-600 font-semibold text-xs uppercase tracking-wide">
                       {coffeeItem.origine}
@@ -120,12 +121,12 @@ export function CarouselSize() {
                     <span className="text-xl font-bold text-amber-600">
                       {coffeeItem.prix} €
                     </span>
-                    <div className="flex space-x-2">
-                      <button className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-sm transition-colors">
+                    <div className="flex space-x-2 ">
+                      <button className="  bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-sm transition-colors">
                         Voir produit
                       </button>
-                      <button className="bg-amber-800 hover:bg-amber-900 text-white px-3 py-1 rounded-full text-sm transition-colors">
-                        ajouter au panier
+                      <button className=" bg-amber-800 hover:bg-amber-900 text-white px-3 py-1 rounded-full text-sm transition-colors">
+                        Ajouter au panier
                       </button>
                     </div>
                   </div>

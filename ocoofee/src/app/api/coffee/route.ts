@@ -10,7 +10,7 @@ export async function GET() {
     orderBy: {
       prix: "asc",
     },
-    take: 4,
+    take: 6,
   });
   if (!coffees) {
     return Response.json({ error: "No coffees found" }, { status: 404 });
