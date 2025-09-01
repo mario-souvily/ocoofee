@@ -1,23 +1,14 @@
-"use client"
 
-import { useEffect, useState } from "react";
-import { ICoffee } from "../@types/index";
 
-export default function Coffee() {
-  const [coffee, setCoffee] = useState<ICoffee[]>([]);
+import { getCoffee } from "@/app/action/product";
 
-  useEffect(() => {
-    const fetchCoffee = async () => {
-      try {
-        const response = await fetch("/api/coffee");
-        const data = await response.json();
-        setCoffee(data as ICoffee[]);
-      } catch (error) {
-        console.error("Error fetching coffee:", error);
-      }
-    };
-    fetchCoffee();
-  }, []);
+export default async function Coffee() {
+  const coffee = await getCoffee();
+
+
+  if (!coffee) {
+    return <div>No coffee found</div>;
+  }
 
   return (
     <div>

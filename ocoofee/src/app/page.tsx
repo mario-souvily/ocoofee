@@ -20,10 +20,11 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors"
-              onClick={() => router.push("/coffee")}
+              onClick={() => router.push("/coffee/all")}
             >
               Découvrir nos cafés
             </button>
+
             <button className="border-2 border-white text-white hover:bg-white hover:text-amber-800 px-8 py-3 rounded-full text-lg font-semibold transition-colors">
               En savoir plus
             </button>
@@ -87,7 +88,7 @@ export default function Home() {
           <div className="text-center mt-12">
             <button
               className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors"
-              onClick={() => router.push("/coffee")}
+              onClick={() => router.push("/coffee/all")}
             >
               Voir tous nos cafés
             </button>
