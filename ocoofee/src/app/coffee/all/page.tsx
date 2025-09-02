@@ -42,9 +42,11 @@ export default async function AllCoffeePage() {
               Tous
             </button>
             <button className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
+              {/* onclick={() => router.push("/coffee/all?categorie=grain")} */}
               🌱 Grains
             </button>
             <button className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
+              {/* onclick={() => router.push("/coffee/all?categorie=moulu")} */}
               ☕ Moulus
             </button>
           </div>

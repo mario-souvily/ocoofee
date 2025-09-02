@@ -13,7 +13,7 @@ export default function Navbar() {
   const [links] = useState<{ name: string; href: string }[]>([
     { name: "Accueil", href: "/" },
     { name: "Nos cafés", href: "/cafes" },
-    { name: "Se connecter", href: "/authentification" },
+    { name: "Se connecter", href: "/inscription" },
     { name: "Panier", href: "/panier" },
   ]);
 
@@ -32,6 +32,7 @@ export default function Navbar() {
               Ocoofee
             </Link>
           </div>
+          <button onClick={() => router.push("/inscription")}>Se connecter</button>
 
           {/* Navigation Desktop */}
           <div className="hidden lg:flex items-center space-x-8">

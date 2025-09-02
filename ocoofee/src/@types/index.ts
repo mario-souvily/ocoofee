@@ -41,3 +41,13 @@ export interface IUser {
   createdAt: Date;
   updatedAt: Date;
 }
+export interface IInscription {
+  prenom: string;
+  nom: string;
+  email: string;
+  pass: string;
+}
+export interface ILogin {
+  email: string;
+  pass: string;
+}
