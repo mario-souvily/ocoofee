@@ -1,18 +1,21 @@
 "use server";
 import { IInscription } from "@/@types";
 import { prisma } from "@/lib/prisma";
+import { sanitizeUser } from "@/lib/utils";
 
-export async function getInscription() {
-  try {
-    const inscriptions = await prisma.user.findMany({
-      where: { role: { equals: false } },
-    });
-    return { ok: true, data: inscriptions } as const;
-  } catch (e) {
-    return { ok: false, message: "Erreur lors de la récupération" } as const;
-  }
-}
+// export async function getInscription() {
+//   try {
+//     const inscriptions = await prisma.user.findMany({
+//       where: { role: { equals: false } },
+//     });
+//     return { ok: true, data: inscriptions } as const;
+//   } catch (e) {
+//     return { ok: false, message: "Erreur lors de la récupération" } as const;
+//   }
+// }
 
+// Cette fonction POST permet de créer un nouvel utilisateur dans la base de données via Prisma.
+// Elle retourne un objet JSON contenant le nouvel utilisateur si la création réussit, sinon une erreur 400.
 export async function postInscription(inscription: IInscription) {
   try {
     if (
@@ -23,7 +26,16 @@ export async function postInscription(inscription: IInscription) {
     ) {
       return { ok: false, message: "Champs requis manquants" } as const;
     }
-
+    const strongPass =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*_=+\-;]).{8,}$/;
+    if (!strongPass.test(inscription.pass)) {
+      return {
+        ok: false,
+        message:
+          "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial",
+      } as const;
+    }
+    // si l'email existe déjà retourne une erreur 409
     const exists = await prisma.user.findFirst({
       where: { email: inscription.email },
     });
@@ -34,7 +46,11 @@ export async function postInscription(inscription: IInscription) {
     const user = await prisma.user.create({
       data: { ...inscription, role: false },
     });
-    return { ok: true, message: "Inscription réussie", data: user } as const;
+    return {
+      ok: true,
+      message: "Inscription réussie",
+      data: sanitizeUser(user),
+    } as const;
   } catch (e) {
     return { ok: false, message: "Erreur serveur" } as const;
   }

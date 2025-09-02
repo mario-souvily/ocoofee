@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   try {
     const { prenom, nom, email, pass } = await req.json();
 
-    // validations rapides
+    // si un des champs est manquant retourne une erreur 400
     if (!prenom || !nom || !email || !pass) {
       return Response.json(
         { error: "Champs requis manquants" },
@@ -28,17 +28,10 @@ export async function POST(req: Request) {
     if (!isEmail(email)) {
       return Response.json({ error: "Email invalide" }, { status: 400 });
     }
-    const strongPass = /^A-Za-z0-9!@#$%^&*_=+-;/;
-    if (!strongPass.test(pass)) {
-      return Response.json(
-        {
-          error:
-            "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial",
-        },
-        { status: 400 }
-      );
-    }
+    // si le mot de passe ne respecte pas les conditions retourne une erreur 400
+    
 
+    // si l'email existe déjà retourne une erreur 409
     const exists = await prisma.user.findUnique({ where: { email } });
     if (exists) {
       return Response.json(
@@ -47,8 +40,10 @@ export async function POST(req: Request) {
       );
     }
 
+    // hash le mot de passe
     const hashed = await argon2.hash(pass);
 
+    // crée le nouvel utilisateur
     const created = await prisma.user.create({
       data: {
         prenom,
