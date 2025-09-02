@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { isEmail, sanitizeUser } from "@/lib/utils";
+import { isEmail, isStrongPass, sanitizeUser } from "@/lib/utils";
 import argon2 from "argon2";
 
 // Cette fonction GET permet de récupérer tous les utilisateurs de la base de données via Prisma.
@@ -25,11 +25,21 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+    // si le mot de passe ne respecte pas les conditions retourne une erreur 400
+    if (!isStrongPass(pass)) {
+      return Response.json(
+        {
+          error:
+            "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial",
+        },
+        { status: 400 }
+      );
+    }
+    // si l'email n'est pas valide retourne une erreur 400
     if (!isEmail(email)) {
       return Response.json({ error: "Email invalide" }, { status: 400 });
     }
     // si le mot de passe ne respecte pas les conditions retourne une erreur 400
-    
 
     // si l'email existe déjà retourne une erreur 409
     const exists = await prisma.user.findUnique({ where: { email } });

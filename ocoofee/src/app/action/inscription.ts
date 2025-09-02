@@ -1,7 +1,8 @@
 "use server";
 import { IInscription } from "@/@types";
 import { prisma } from "@/lib/prisma";
-import { sanitizeUser } from "@/lib/utils";
+import { isEmail, isStrongPass, sanitizeUser } from "@/lib/utils";
+import argon2 from "argon2";
 
 // export async function getInscription() {
 //   try {
@@ -26,14 +27,16 @@ export async function postInscription(inscription: IInscription) {
     ) {
       return { ok: false, message: "Champs requis manquants" } as const;
     }
-    const strongPass =
-      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*_=+\-;]).{8,}$/;
-    if (!strongPass.test(inscription.pass)) {
+    if (!isStrongPass(inscription.pass)) {
       return {
         ok: false,
         message:
           "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial",
       } as const;
+    }
+    // si l'email n'est pas valide retourne une erreur 400
+    if (!isEmail(inscription.email)) {
+      return { ok: false, message: "Email invalide" } as const;
     }
     // si l'email existe déjà retourne une erreur 409
     const exists = await prisma.user.findFirst({
@@ -42,9 +45,16 @@ export async function postInscription(inscription: IInscription) {
     if (exists) {
       return { ok: false, message: "Cet email est déjà utilisé" } as const;
     }
+    const hashed = await argon2.hash(inscription.pass);
 
     const user = await prisma.user.create({
-      data: { ...inscription, role: false },
+      data: {
+        prenom: inscription.prenom,
+        nom: inscription.nom,
+        email: inscription.email,
+        pass: hashed,
+        role: false,
+      },
     });
     return {
       ok: true,

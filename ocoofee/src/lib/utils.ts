@@ -13,3 +13,9 @@ export function sanitizeUser<T extends { pass?: string }>(u: T) {
 export function isEmail(v: string | null) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v || "");
 }
+
+export function isStrongPass(pass: string) {
+  const strongPass =
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*_=+\-;]).{8,}$/;
+  return strongPass.test(pass);
+}
