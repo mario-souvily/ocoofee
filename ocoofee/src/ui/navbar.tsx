@@ -1,5 +1,6 @@
 "use client";
 
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +14,6 @@ export default function Navbar() {
   const [links] = useState<{ name: string; href: string }[]>([
     { name: "Accueil", href: "/" },
     { name: "Nos cafés", href: "/cafes" },
-    { name: "S'inscrire / Se connecter", href: "/inscription" },
     { name: "Panier", href: "/panier" },
   ]);
 
@@ -44,17 +44,33 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-          </div>
 
-          {/* Bouton Panier avec icône */}
-          <div className="hidden lg:flex items-center gap-4">
+            {/* Boutons d'authentification */}
+            <div className="hidden lg:flex items-center space-x-8">
+              <SignedOut>
+                <SignInButton>
+                  <button className=" text-white hover:text-amber-200 transition-colors font-medium">
+                    Se connecter
+                  </button>
+                </SignInButton>
+                <SignUpButton>
+                  <button className=" text-white hover:text-amber-200 transition-colors font-medium">
+                    S&apos;inscrire
+                  </button>
+                </SignUpButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </div>
+
+            {/* Panier */}
             <Link
               href="/panier"
-              className=" bg-amber-900 shadow-lg hover:bg-amber-600 text-white px-4 py-2 rounded-full transition-colors flex items-center gap-2"
+              className="bg-amber-900 shadow-lg hover:bg-amber-600 text-white px-4 py-2 rounded-full transition-colors flex items-center gap-2 ml-4"
             >
               <Image src="/image/shopping-cart.png" alt="Panier" width={30} height={30} />
             </Link>
-
           </div>
 
           {/* Bouton Menu Mobile */}
@@ -86,10 +102,30 @@ export default function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              <div className="pt-4 border-t border-amber-700">
+
+              {/* Boutons d'authentification mobile */}
+              <div className="pt-4 border-t border-amber-700 space-y-2">
+                <SignedOut>
+                  <SignInButton>
+                    <button className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-md font-medium py-2 cursor-pointer">
+                      Se connecter
+                    </button>
+                  </SignInButton>
+                  <SignUpButton>
+                    <button className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-md font-medium py-2 cursor-pointer mt-2">
+                      S&apos;inscrire
+                    </button>
+                  </SignUpButton>
+                </SignedOut>
+                <SignedIn>
+                  <div className="flex justify-center">
+                    <UserButton />
+                  </div>
+                </SignedIn>
+
                 <Link
                   href="/panier"
-                  className="block bg-amber-700 hover:bg-amber-600 text-white px-4 py-3 rounded-full transition-colors text-center font-medium"
+                  className="block bg-amber-700 hover:bg-amber-600 text-white px-4 py-3 rounded-full transition-colors text-center font-medium mt-4"
                   onClick={() => setIsOpen(false)}
                 >
                   <Image src="/image/shopping-cart.png" alt="Panier" width={30} height={30} />

@@ -8,7 +8,10 @@ export default function Page() {
           <h1 className="text-3xl font-bold text-amber-900">Créer un compte</h1>
           <p className="text-gray-600 mt-2">Rejoignez Ocoofee en quelques secondes.</p>
         </div>
-        <Inscription />
+
+        <div className="flex justify-center">
+          <Inscription />
+        </div>
       </div>
     </div>
   );
