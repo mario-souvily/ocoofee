@@ -6,8 +6,6 @@ async function main() {
   await prisma.user.deleteMany();
   await prisma.cafe.deleteMany();
 
-  await prisma.$executeRaw`ALTER TABLE user AUTO_INCREMENT = 1`;
-  await prisma.$executeRaw`ALTER TABLE cafe AUTO_INCREMENT = 1`;
   // === Users ===
   await prisma.user.createMany({
     data: [
@@ -227,7 +225,7 @@ async function main() {
       quantite: "250g",
       description: "Café équilibré, légèrement fruité.",
       prix: 9.0,
-      image: "/image/cafe/mexique-chiapas.jpg",
+      image: "/image/mexique-chiapas.jpg",
       categorie: "moulu",
     },
   ];

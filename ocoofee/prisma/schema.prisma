@@ -25,6 +25,8 @@ model User {
   updatedAt DateTime @updatedAt
 
   commandes Commande[]
+
+  @@map("users")
 }
 
 model Cafe {
