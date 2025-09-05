@@ -1,4 +1,3 @@
-import Inscription from "@/ui/inscription";
 
 export default function Page() {
   return (
@@ -10,7 +9,8 @@ export default function Page() {
         </div>
 
         <div className="flex justify-center">
-          <Inscription />
+
+
         </div>
       </div>
     </div>

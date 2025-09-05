@@ -19,7 +19,7 @@ export async function GET() {
     return Response.json(coffees);
   }
 }
-
+// creer un cafe avec les champs suivants : nom, type, origine, quantite, description, prix, image, categorie
 export async function POST(req: Request) {
   const { nom, type, origine, quantite, description, prix, image, categorie } =
     await req.json();

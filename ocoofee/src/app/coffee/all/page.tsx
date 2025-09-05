@@ -1,17 +1,20 @@
 import { prisma } from "@/lib/prisma";
 import ImageComponent from "@/ui/image";
+import { SignedIn } from "@clerk/nextjs";
+import { BiSolidCoffeeBean } from "react-icons/bi";
+import { GiCoffeeBeans } from "react-icons/gi";
 
-interface ICoffee {
-  id: number;
-  nom: string;
-  type: string;
-  origine: string;
-  quantite: string;
-  description: string;
-  prix: number;
-  image: string;
-  categorie: string;
-}
+// interface ICoffee {
+//   id: number;
+//   nom: string;
+//   type: string;
+//   origine: string;
+//   quantite: string;
+//   description: string;
+//   prix: number;
+//   image: string;
+//   categorie: string;
+// }
 
 export default async function AllCoffeePage() {
   const allCoffee = await prisma.cafe.findMany({
@@ -43,11 +46,11 @@ export default async function AllCoffeePage() {
             </button>
             <button className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
               {/* onclick={() => router.push("/coffee/all?categorie=grain")} */}
-              🌱 Grains
+              <GiCoffeeBeans /> Grains
             </button>
             <button className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
               {/* onclick={() => router.push("/coffee/all?categorie=moulu")} */}
-              ☕ Moulus
+              <GiCoffeeBeans /> Moulus
             </button>
           </div>
         </div>
@@ -69,8 +72,9 @@ export default async function AllCoffeePage() {
                   width={400}
                   height={400}
                 />
-                <div className="absolute top-4 left-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                  {coffee.categorie === 'grain' ? '🌱 Grain' : '☕ Moulu'}
+                <div className="absolute top-4 left-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
+                  <BiSolidCoffeeBean />
+                  {coffee.categorie === 'grain' ? 'Grain' : 'Moulu'}
                 </div>
                 <div className="absolute top-4 right-4 bg-white/90 text-amber-800 px-2 py-1 rounded-full text-xs font-semibold">
                   {coffee.origine}
@@ -106,9 +110,11 @@ export default async function AllCoffeePage() {
                   <button className="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-full text-sm font-semibold transition-colors">
                     Voir le produit
                   </button>
-                  <button className="flex-1 bg-amber-800 hover:bg-amber-900 text-white py-2 px-4 rounded-full text-sm font-semibold transition-colors">
-                    Ajouter au panier
-                  </button>
+                  <SignedIn>
+                    <button className="flex-1 bg-amber-800 hover:bg-amber-900 text-white py-2 px-4 rounded-full text-sm font-semibold transition-colors">
+                      Ajouter au panier
+                    </button>
+                  </SignedIn>
                 </div>
               </div>
             </div>

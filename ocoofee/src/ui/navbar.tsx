@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { GiCoffeeBeans } from "react-icons/gi";
 
 export default function Navbar() {
   const router = useRouter();
@@ -28,8 +29,9 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center gap-4">
-            <Link href="/" className="text-2xl font-bold hover:text-amber-200 transition-colors">
-              Ocoofee
+            <Link href="/" className="text-2xl font-bold hover:text-amber-200 transition-colors flex flex-row space-x-2">
+              <GiCoffeeBeans size={34} />
+              <span>Ocoofee</span>
             </Link>
           </div>
 
@@ -73,7 +75,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Bouton Menu Mobile */}
+          {/* Bouton Menu burger*/}
           <div className="lg:hidden">
             <div className="lg:hidden">
               <button

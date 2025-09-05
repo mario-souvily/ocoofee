@@ -16,17 +16,15 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
-  prenom    String
-  nom       String
+  clerkId   String   @unique // ID unique provenant de Clerk
+  prenom    String?
+  nom       String?
   email     String   @unique
-  pass      String
-  role      Boolean  @default(false) // false = user 0, true = admin 1
+  role      Boolean  @default(false) // false = user, true = admin
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   commandes Commande[]
-
-  @@map("users")
 }
 
 model Cafe {

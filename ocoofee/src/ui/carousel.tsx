@@ -1,3 +1,4 @@
+import { SignedIn } from '@clerk/nextjs';
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CarouselSkeleton from "./carousel-skeleton";
@@ -122,12 +123,14 @@ export function CarouselSize() {
                       {coffeeItem.prix} €
                     </span>
                     <div className="flex space-x-2 ">
-                      <button className="  bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-sm transition-colors">
+                      <button className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-sm transition-colors">
                         Voir produit
                       </button>
-                      <button className=" bg-amber-800 hover:bg-amber-900 text-white px-3 py-1 rounded-full text-sm transition-colors">
-                        Ajouter au panier
-                      </button>
+                      <SignedIn>
+                        <button className="bg-amber-800 hover:bg-amber-900 text-white px-3 py-1 rounded-full text-sm transition-colors">
+                          Ajouter au panier
+                        </button>
+                      </SignedIn>
                     </div>
                   </div>
                 </div>

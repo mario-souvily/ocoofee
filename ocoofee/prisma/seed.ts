@@ -13,14 +13,14 @@ async function main() {
         prenom: "Toto",
         nom: "Titi",
         email: "test@test.com",
-        pass: "sha256:test", // ⚠️ à remplacer par vrai hash bcrypt/sha2
+        clerkId: "user_test_clerk_id", // ⚠️ à remplacer par un vrai id Clerk
         role: false, // user
       },
       {
         prenom: "Mario",
         nom: "Souvily",
         email: "armco@hotmail.fr",
-        pass: "sha256:1234", // ⚠️ idem
+        clerkId: "user_32HMAP0wVjaZJbkiZN1uob87djv", // ⚠️ idem
         role: true, // admin
       },
     ],

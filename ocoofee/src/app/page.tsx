@@ -1,6 +1,7 @@
 "use client";
 import { CarouselSize } from "@/ui/carousel";
 import { useRouter } from "next/navigation";
+import { GiCoffeeBeans } from "react-icons/gi";
 
 export default function Home() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/20 z-10"></div>
         <div className="relative z-20 text-center text-white px-4">
           <h1 className="text-6xl md:text-8xl font-bold mb-6 font-serif">
-            Ocoofee
+            <GiCoffeeBeans size={100} /> Ocoofee
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
             Découvrez l&apos;art du café d&apos;exception. Des grains sélectionnés avec soin
