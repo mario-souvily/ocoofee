@@ -1,16 +1,22 @@
 "use client";
 
+import CarteModal from "@/components/carteModal";
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Menu, X } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FaShoppingCart } from "react-icons/fa";
 import { GiCoffeeBeans } from "react-icons/gi";
 
 export default function Navbar() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [cardModalOpen, setCardModalOpen] = useState(false)
+
+  const handleCardOpen = () => {
+    setCardModalOpen(!cardModalOpen)
+  }
 
   const [links] = useState<{ name: string; href: string }[]>([
     { name: "Accueil", href: "/" },
@@ -25,8 +31,8 @@ export default function Navbar() {
 
   return (
     <nav className="bg-amber-900 text-white shadow-lg fixed top-0 w-full z-50">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+      <div className="max-w-6xl mx-auto px-4 ">
+        <div className="flex justify-between items-center h-16 ">
           {/* Logo */}
           <div className="flex items-center gap-4">
             <Link href="/" className="text-2xl font-bold hover:text-amber-200 transition-colors flex flex-row space-x-2">
@@ -67,13 +73,15 @@ export default function Navbar() {
             </div>
 
             {/* Panier */}
-            <Link
-              href="/panier"
-              className="bg-amber-900 shadow-lg hover:bg-amber-600 text-white px-4 py-2 rounded-full transition-colors flex items-center gap-2 ml-4"
+            <button
+              onClick={handleCardOpen}
+              className="bg-amber-900 shadow-lg hover:bg-amber-600 text-white px-4 py-2 rounded-full transition-colors flex items-center gap-2 ml-4 relative"
             >
-              <Image src="/image/shopping-cart.png" alt="Panier" width={30} height={30} />
-            </Link>
+              <span className="absolute top-0 right-0 bg-amber-600 text-white px-2 py-1 rounded-full text-xs">0</span>
+              <FaShoppingCart size={30} />
+            </button>
           </div>
+          <CarteModal cardModalOpen={cardModalOpen} handleCardOpen={handleCardOpen} />
 
           {/* Bouton Menu burger*/}
           <div className="lg:hidden">
@@ -93,7 +101,7 @@ export default function Navbar() {
         {/* Menu Mobile */}
         {isOpen && (
           <div className="lg:hidden bg-amber-900 border-t border-amber-700">
-            <div className="px-4 py-6 space-y-4">
+            <div className="px-4 space-y-1">
               {links.map((link) => (
                 <Link
                   key={link.name}
@@ -127,10 +135,12 @@ export default function Navbar() {
 
                 <Link
                   href="/panier"
-                  className="block bg-amber-700 hover:bg-amber-600 text-white px-4 py-3 rounded-full transition-colors text-center font-medium mt-4"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleCardOpen}
+                  className=" text-white px-1 py-3 rounded-full transition-colors text-center font-medium mt-4 relative"
                 >
-                  <Image src="/image/shopping-cart.png" alt="Panier" width={30} height={30} />
+                  <span className="absolute top-0 right-0 bg-amber-600 text-white px-2 py-1 rounded-full text-xs">0</span>
+                  <FaShoppingCart size={30} />
+
                 </Link>
               </div>
             </div>

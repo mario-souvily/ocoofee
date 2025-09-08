@@ -9,7 +9,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden"
+
+        style={{ backgroundImage: "url('https://plus.unsplash.com/premium_photo-1675237625862-d982e7f44696?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')" }}>
         <div className="absolute inset-0 bg-black/20 z-10"></div>
         <div className="relative z-20 text-center text-white px-4">
           <h1 className="text-6xl md:text-8xl font-bold mb-6 font-serif">
