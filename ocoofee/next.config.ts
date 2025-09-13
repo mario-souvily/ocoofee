@@ -17,7 +17,31 @@ const nextConfig: NextConfig = {
         hostname: "127.0.0.1",
         port: "3000",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3001",
+      },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
+        port: "3001",
+      },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value:
+              "default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; connect-src 'self' https:; img-src 'self' data: https:; font-src 'self' https:;",
+          },
+        ],
+      },
+    ];
   },
 };
 

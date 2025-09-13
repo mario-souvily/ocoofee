@@ -27,6 +27,22 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="fr">
+        <head>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                // Ignorer les erreurs d'extensions de navigateur
+                window.addEventListener('error', function(e) {
+                  if (e.message.includes('message channel closed') || 
+                      e.message.includes('verify-email-address')) {
+                    e.preventDefault();
+                    return false;
+                  }
+                });
+              `,
+            }}
+          />
+        </head>
         <body
           cz-shortcut-listen="true"
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}

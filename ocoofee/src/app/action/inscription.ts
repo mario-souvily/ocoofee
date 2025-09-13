@@ -2,7 +2,6 @@
 import { IInscription } from "@/@types";
 import { prisma } from "@/lib/prisma";
 import { isEmail, isStrongPass, sanitizeUser } from "@/lib/utils";
-import argon2 from "argon2";
 
 // export async function getInscription() {
 //   try {
@@ -23,11 +22,11 @@ export async function postInscription(inscription: IInscription) {
       !inscription?.prenom ||
       !inscription?.nom ||
       !inscription?.email ||
-      !inscription?.pass
+      !inscription?.clerkId
     ) {
       return { ok: false, message: "Champs requis manquants" } as const;
     }
-    if (!isStrongPass(inscription.pass)) {
+    if (!isStrongPass(inscription.clerkId)) {
       return {
         ok: false,
         message:
@@ -45,14 +44,13 @@ export async function postInscription(inscription: IInscription) {
     if (exists) {
       return { ok: false, message: "Cet email est déjà utilisé" } as const;
     }
-    const hashed = await argon2.hash(inscription.pass);
 
     const user = await prisma.user.create({
       data: {
         prenom: inscription.prenom,
         nom: inscription.nom,
         email: inscription.email,
-        clerkId: hashed,
+        clerkId: inscription.clerkId,
         role: false,
       },
     });

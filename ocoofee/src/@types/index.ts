@@ -36,7 +36,7 @@ export interface IUser {
   prenom: string;
   nom: string;
   email: string;
-  pass: string;
+  clerkId: string;
   role: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -45,9 +45,9 @@ export interface IInscription {
   prenom: string;
   nom: string;
   email: string;
-  pass: string;
+  clerkId: string;
 }
 export interface ILogin {
   email: string;
-  pass: string;
+  clerkId: string;
 }

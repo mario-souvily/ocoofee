@@ -20,7 +20,7 @@ export default function Navbar() {
 
   const [links] = useState<{ name: string; href: string }[]>([
     { name: "Accueil", href: "/" },
-    { name: "Nos cafés", href: "/cafes" },
+    // { name: "Nos cafés", href: "/cafes" },
     { name: "Panier", href: "/panier" },
   ]);
 
@@ -52,6 +52,21 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
+            <ul className="flex items-center space-x-8">
+              <li className="relative"
+                onMouseEnter={() => setIsOpen(true)}
+                onMouseLeave={() => setIsOpen(false)}>
+                <button className="text-white hover:text-amber-200 transition-colors font-medium">
+                  Nos cafés
+                </button>
+                {isOpen && (
+                  <ul className="absolute left-0 top-15 w-full h-full cursor-pointer">
+                    <li className="text-white hover:text-amber-200 font-medium">cafes en grain</li>
+                    <li className="text-white hover:text-amber-200 font-medium">cafes en moulu</li>
+                  </ul>
+                )}
+              </li>
+            </ul>
 
             {/* Boutons d'authentification */}
             <div className="hidden lg:flex items-center space-x-8">
