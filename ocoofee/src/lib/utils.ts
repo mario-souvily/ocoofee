@@ -5,8 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function sanitizeUser<T extends { pass?: string }>(u: T) {
-  const { pass: _pass, ...safe } = u as T;
+export function sanitizeUser<T extends { clerkId?: string }>(u: T) {
+  const { clerkId: _clerkId, ...safe } = u as T;
   return safe;
 }
 

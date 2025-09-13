@@ -16,17 +16,17 @@ export async function GET() {
 // Elle retourne un objet JSON contenant le nouvel utilisateur si la création réussit, sinon une erreur 400.
 export async function POST(req: Request) {
   try {
-    const { prenom, nom, email, pass } = await req.json();
+    const { prenom, nom, email, clerkId } = await req.json();
 
     // si un des champs est manquant retourne une erreur 400
-    if (!prenom || !nom || !email || !pass) {
+    if (!prenom || !nom || !email || !clerkId) {
       return Response.json(
         { error: "Champs requis manquants" },
         { status: 400 }
       );
     }
     // si le mot de passe ne respecte pas les conditions retourne une erreur 400
-    if (!isStrongPass(pass)) {
+    if (!isStrongPass(clerkId)) {
       return Response.json(
         {
           error:
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     }
 
     // hash le mot de passe
-    const hashed = await argon2.hash(pass);
+    const hashed = await argon2.hash(clerkId);
 
     // crée le nouvel utilisateur
     const created = await prisma.user.create({
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
         prenom,
         nom,
         email,
-        pass: hashed,
+        clerkId: hashed,
         role: false, // par défaut false user
       },
     });

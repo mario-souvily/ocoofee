@@ -52,7 +52,7 @@ export async function postInscription(inscription: IInscription) {
         prenom: inscription.prenom,
         nom: inscription.nom,
         email: inscription.email,
-        pass: hashed,
+        clerkId: hashed,
         role: false,
       },
     });
