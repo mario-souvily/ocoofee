@@ -1,6 +1,7 @@
 "use client";
 
 import CarteModal from "@/components/carteModal";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
@@ -52,24 +53,38 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <ul className="flex items-center space-x-8">
-              <li className="relative"
-                onMouseEnter={() => setIsOpen(true)}
-                onMouseLeave={() => setIsOpen(false)}>
-
-                <button className="text-white hover:text-amber-200 transition-colors font-medium">
-                  Nos cafés
-                </button>
-                {isOpen && (
-                  <ul >
-                    <button onClick={() => setIsOpen(false)}>
-                      <li className="text-white hover:text-amber-200 font-medium">cafes en grain</li>
-                      <li className="text-white hover:text-amber-200 font-medium">cafes en moulu</li>
-                    </button>
-                  </ul>
-                )}
-              </li>
-            </ul>
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem
+                  onMouseEnter={() => setIsOpen(true)}
+                  onMouseLeave={() => setIsOpen(false)}
+                >
+                  <NavigationMenuTrigger>Nos cafés</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="text-white hover:text-amber-200 font-medium grid grid-cols-2 gap-4 p-4">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="/cafes/grain" className="block">
+                            <div className="flex flex-col gap-2">
+                              <h3 className="text-white hover:text-amber-200 font-medium">cafes en grain</h3>
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="/cafes/moulu" className="block">
+                            <div className="flex flex-col gap-2">
+                              <h3 className="text-white hover:text-amber-200 font-medium">cafes en moulu</h3>
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
 
             {/* Boutons d'authentification */}
             <div className="hidden lg:flex items-center space-x-8">
@@ -165,6 +180,6 @@ export default function Navbar() {
           </div>
         )}
       </div>
-    </nav>
+    </nav >
   );
 }
