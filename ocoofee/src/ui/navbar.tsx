@@ -56,13 +56,16 @@ export default function Navbar() {
               <li className="relative"
                 onMouseEnter={() => setIsOpen(true)}
                 onMouseLeave={() => setIsOpen(false)}>
+
                 <button className="text-white hover:text-amber-200 transition-colors font-medium">
                   Nos cafés
                 </button>
                 {isOpen && (
-                  <ul className="absolute left-0 top-15 w-full h-full cursor-pointer">
-                    <li className="text-white hover:text-amber-200 font-medium">cafes en grain</li>
-                    <li className="text-white hover:text-amber-200 font-medium">cafes en moulu</li>
+                  <ul >
+                    <button onClick={() => setIsOpen(false)}>
+                      <li className="text-white hover:text-amber-200 font-medium">cafes en grain</li>
+                      <li className="text-white hover:text-amber-200 font-medium">cafes en moulu</li>
+                    </button>
                   </ul>
                 )}
               </li>
