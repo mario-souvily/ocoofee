@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma";
 import ImageComponent from "@/ui/image";
 import { SignedIn } from "@clerk/nextjs";
 import { BiSolidCoffeeBean } from "react-icons/bi";
-import { GiCoffeeBeans } from "react-icons/gi";
 
 // interface ICoffee {
 //   id: number;
@@ -46,11 +45,11 @@ export default async function AllCoffeePage() {
             </button>
             <button className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
               {/* onclick={() => router.push("/coffee/all?categorie=grain")} */}
-              <GiCoffeeBeans /> Grains
+              Grains
             </button>
             <button className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
               {/* onclick={() => router.push("/coffee/all?categorie=moulu")} */}
-              <GiCoffeeBeans /> Moulus
+              Moulus
             </button>
           </div>
         </div>

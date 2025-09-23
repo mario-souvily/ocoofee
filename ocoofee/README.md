@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Description du site. Qu'elle est l'objectif du site ?
+
 ## Getting Started
 
 First, run the development server:
