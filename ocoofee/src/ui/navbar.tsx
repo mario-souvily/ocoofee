@@ -1,7 +1,7 @@
 "use client";
 
 import CarteModal from "@/components/carteModal";
-import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -30,9 +30,9 @@ export default function Navbar() {
   }, [router]);
 
   return (
-    <nav className="bg-amber-900 text-white shadow-lg fixed top-0 w-full z-50">
-      <div className="max-w-6xl mx-auto px-4 ">
-        <div className="flex justify-between items-center h-16 ">
+    <nav className="bg-amber-900 text-white shadow-lg fixed top-0 w-full z-50 ">
+      <div className="max-w-6xl mx-auto px-4  ">
+        <div className="flex items-center h-16 ">
           {/* Logo */}
           <div className="flex items-center gap-4">
             <Link href="/" className="text-2xl font-bold hover:text-amber-200 transition-colors flex flex-row space-x-2">
@@ -40,9 +40,11 @@ export default function Navbar() {
               <span>Ocoofee</span>
             </Link>
           </div>
+          {/* Espaceur pour pousser le menu burger à droite sur mobile */}
+          <div className="flex-1 lg:hidden" />
 
           {/* Navigation Desktop */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8 ml-auto">
             {links.map((link) => (
               <Link
                 key={link.name}
@@ -70,26 +72,6 @@ export default function Navbar() {
                 )}
               </li>
             </ul>
-
-            {/* Boutons d'authentification */}
-            <div className="hidden lg:flex items-center space-x-8">
-              <SignedOut>
-                <SignInButton>
-                  <button className=" text-white hover:text-amber-200 transition-colors font-medium">
-                    Se connecter
-                  </button>
-                </SignInButton>
-                <SignUpButton>
-                  <button className=" text-white hover:text-amber-200 transition-colors font-medium">
-                    S&apos;inscrire
-                  </button>
-                </SignUpButton>
-              </SignedOut>
-              <SignedIn>
-                <UserButton />
-              </SignedIn>
-            </div>
-
             {/* Panier */}
             <button
               onClick={handleCardOpen}
@@ -101,12 +83,30 @@ export default function Navbar() {
           </div>
           <CarteModal cardModalOpen={cardModalOpen} handleCardOpen={handleCardOpen} />
 
+          {/* Bouton d'authentification */}
+          <div className="hidden lg:flex items-center space-x-8 ml-6">
+            <SignedOut>
+              <Link href="/auth">
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className=" text-white hover:text-amber-200 transition-colors font-medium ml-4">
+                  Se connecter
+                </button>
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
+
+
+
           {/* Bouton Menu burger*/}
           <div className="lg:hidden">
             <div className="lg:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-white hover:text-amber-200 transition-colors p-2"
+                className="text-white hover:text-amber-200 transition-colors p-2 "
                 aria-label="Menu"
               >
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -131,19 +131,14 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              {/* Boutons d'authentification mobile */}
+              {/* Bouton d'authentification mobile */}
               <div className="pt-4 border-t border-amber-700 space-y-2">
                 <SignedOut>
-                  <SignInButton>
+                  <Link href="/auth" onClick={() => setIsOpen(false)}>
                     <button className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-md font-medium py-2 cursor-pointer">
                       Se connecter
                     </button>
-                  </SignInButton>
-                  <SignUpButton>
-                    <button className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-md font-medium py-2 cursor-pointer mt-2">
-                      S&apos;inscrire
-                    </button>
-                  </SignUpButton>
+                  </Link>
                 </SignedOut>
                 <SignedIn>
                   <div className="flex justify-center">
