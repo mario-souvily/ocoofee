@@ -1,6 +1,9 @@
 "use client";
 
+
+
 import CarteModal from "@/components/carteModal";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuTrigger } from '@/components/ui/navigation-menu';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
@@ -30,7 +33,7 @@ export default function Navbar() {
   }, [router]);
 
   return (
-    <nav className="bg-amber-900 text-white shadow-lg fixed top-0 w-full z-50 ">
+    <nav className="bg-amber-900 text-white shadow-lg fixed top-0 w-full z-50 list-none">
       <div className="max-w-6xl mx-auto px-4  ">
         <div className="flex items-center h-16 ">
           {/* Logo */}
@@ -40,6 +43,7 @@ export default function Navbar() {
               <span>Ocoofee</span>
             </Link>
           </div>
+
           {/* Espaceur pour pousser le menu burger à droite sur mobile */}
           <div className="flex-1 lg:hidden" />
 
@@ -49,56 +53,74 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-white hover:text-amber-200 transition-colors font-medium"
+                className="text-white hover:text-amber-200 transition-colors font-medium "
               >
                 {link.name}
               </Link>
             ))}
-            <ul className="flex items-center space-x-8">
-              <li className="relative"
-                onMouseEnter={() => setIsOpen(true)}
-                onMouseLeave={() => setIsOpen(false)}>
 
-                <button className="text-white hover:text-amber-200 transition-colors font-medium">
-                  Nos cafés
-                </button>
-                {isOpen && (
-                  <ul >
-                    <button onClick={() => setIsOpen(false)}>
-                      <li className="text-white hover:text-amber-200 font-medium">cafes en grain</li>
-                      <li className="text-white hover:text-amber-200 font-medium">cafes en moulu</li>
-                    </button>
+            <NavigationMenu viewport={false}>
+              <NavigationMenuItem >
+
+                <NavigationMenuTrigger className=" bg-amber-900 text-white hover:text-amber-200 transition-colors space-x-0 p-0"> Nos cafés </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3">
+                    <NavigationMenuLink asChild>
+                      <li>
+                        <NavigationMenuLink asChild>
+                        </NavigationMenuLink>
+                        <Link href="/cafesGrain">
+                          <div className=" font-medium">café en grain</div>
+
+                        </Link>
+                      </li>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink asChild>
+                      <Link href="/cafesMoulu">
+                        <div className=" font-medium">café en moulu</div>
+
+                      </Link>
+                    </NavigationMenuLink>
                   </ul>
-                )}
-              </li>
-            </ul>
-            {/* Panier */}
-            <button
-              onClick={handleCardOpen}
-              className="bg-amber-900 shadow-lg hover:bg-amber-600 text-white px-4 py-2 rounded-full transition-colors flex items-center gap-2 ml-4 relative"
-            >
-              <span className="absolute top-0 right-0 bg-amber-600 text-white px-2 py-1 rounded-full text-xs">0</span>
-              <FaShoppingCart size={30} />
-            </button>
-          </div>
-          <CarteModal cardModalOpen={cardModalOpen} handleCardOpen={handleCardOpen} />
-
-          {/* Bouton d'authentification */}
-          <div className="hidden lg:flex items-center space-x-8 ml-6">
-            <SignedOut>
-              <Link href="/auth">
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className=" text-white hover:text-amber-200 transition-colors font-medium ml-4">
-                  Se connecter
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenu>
+            {/* menu déroulant */}
+            {isOpen && (
+              <ul >
+                <button onClick={() => setIsOpen(false)}>
+                  <li className="text-white hover:text-amber-200 font-medium">cafés en grain</li>
+                  <li className="text-white hover:text-amber-200 font-medium">cafés en moulu</li>
                 </button>
-              </Link>
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </div>
+              </ul>
+            )}
 
+
+            {/* Bouton d'authentification */}
+            <div className="hidden lg:flex items-center space-x-8 ml-6 relative left-90">
+              <SignedOut>
+                <Link href="/auth">
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className=" text-white hover:text-amber-200 transition-colors font-medium ml-4">
+                    S&apos;inscrire / Se connecter
+                  </button>
+                </Link>
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+              {/* Panier */}
+              <button
+                onClick={handleCardOpen}
+                className="bg-amber-900 shadow-lg hover:bg-amber-600 text-white px-4 py-2 rounded-full transition-colors flex items-center gap-2 relative"
+              >
+                <span className="absolute top-0 right-0 bg-amber-600 text-white px-2 py-1 rounded-full text-xs">0</span>
+                <FaShoppingCart size={30} />
+              </button>
+            </div>
+            <CarteModal cardModalOpen={cardModalOpen} handleCardOpen={handleCardOpen} />
+          </div>
 
 
           {/* Bouton Menu burger*/}
@@ -114,52 +136,54 @@ export default function Navbar() {
             </div>
 
           </div>
-        </div>
+        </div >
 
         {/* Menu Mobile */}
-        {isOpen && (
-          <div className="lg:hidden bg-amber-900 border-t border-amber-700">
-            <div className="px-4 space-y-1">
-              {links.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="block text-white hover:text-amber-200 transition-colors font-medium py-2"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
-
-              {/* Bouton d'authentification mobile */}
-              <div className="pt-4 border-t border-amber-700 space-y-2">
-                <SignedOut>
-                  <Link href="/auth" onClick={() => setIsOpen(false)}>
-                    <button className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-md font-medium py-2 cursor-pointer">
-                      Se connecter
-                    </button>
+        {
+          isOpen && (
+            <div className="lg:hidden bg-amber-900 border-t border-amber-700">
+              <div className="px-4 space-y-1">
+                {links.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className="block text-white hover:text-amber-200 transition-colors font-medium py-2"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.name}
                   </Link>
-                </SignedOut>
-                <SignedIn>
-                  <div className="flex justify-center">
-                    <UserButton />
-                  </div>
-                </SignedIn>
+                ))}
 
-                <Link
-                  href="/panier"
-                  onClick={handleCardOpen}
-                  className=" text-white px-1 py-3 rounded-full transition-colors text-center font-medium mt-4 relative"
-                >
-                  <span className="absolute top-0 right-0 bg-amber-600 text-white px-2 py-1 rounded-full text-xs">0</span>
-                  <FaShoppingCart size={30} />
+                {/* Bouton d'authentification mobile */}
+                <div className="pt-4 border-t border-amber-700 space-y-2">
+                  <SignedOut>
+                    <Link href="/auth" onClick={() => setIsOpen(false)}>
+                      <button className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-md font-medium py-2 cursor-pointer">
+                        S&apos;inscrire / Se connecter
+                      </button>
+                    </Link>
+                  </SignedOut>
+                  <SignedIn>
+                    <div className="flex justify-center">
+                      <UserButton />
+                    </div>
+                  </SignedIn>
 
-                </Link>
+                  <Link
+                    href="/panier"
+                    onClick={handleCardOpen}
+                    className=" text-white px-1 py-3 rounded-full transition-colors text-center font-medium mt-4 relative"
+                  >
+                    <span className="absolute top-0 right-0 bg-amber-600 text-white px-2 py-1 rounded-full text-xs">0</span>
+                    <FaShoppingCart size={30} />
+
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-    </nav>
+          )
+        }
+      </div >
+    </nav >
   );
 }
