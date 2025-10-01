@@ -1,5 +1,6 @@
 "use client";
 
+import NoSSR from "@/components/NoSSR";
 import { SignIn, SignUp } from "@clerk/nextjs";
 import { useState } from "react";
 //  pages d'authentification pour se connecter et s'inscrire
@@ -31,15 +32,17 @@ export default function AuthPage() {
       <div className="min-h-[70vh] flex items-center justify-center py-5">
         {/* Affiche un seul formulaire à la fois pour éviter le chevauchement du captcha */}
         <div className="w-full max-w-4xl px-4">
-          {mode === "sign-in" ? (
-            <div className="w-full">
-              <SignIn routing="hash" signUpUrl="#sign-up" fallbackRedirectUrl="/" appearance={{ elements: { rootBox: "w-full", card: "w-full" } }} />
-            </div>
-          ) : (
-            <div className="w-full">
-              <SignUp routing="hash" signInUrl="#sign-in" fallbackRedirectUrl="/" appearance={{ elements: { rootBox: "w-full", card: "w-full" } }} />
-            </div>
-          )}
+          <NoSSR fallback={<div className="w-full h-96 flex items-center justify-center">Chargement...</div>}>
+            {mode === "sign-in" ? (
+              <div className="w-full">
+                <SignIn routing="hash" signUpUrl="#sign-up" fallbackRedirectUrl="/" appearance={{ elements: { rootBox: "w-full", card: "w-full" } }} />
+              </div>
+            ) : (
+              <div className="w-full">
+                <SignUp routing="hash" signInUrl="#sign-in" fallbackRedirectUrl="/" appearance={{ elements: { rootBox: "w-full", card: "w-full" } }} />
+              </div>
+            )}
+          </NoSSR>
         </div>
       </div>
     </div>

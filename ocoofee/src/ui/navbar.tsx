@@ -3,6 +3,7 @@
 
 
 import CarteModal from "@/components/carteModal";
+import NoSSR from "@/components/NoSSR";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuTrigger } from '@/components/ui/navigation-menu';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Menu, X } from "lucide-react";
@@ -59,57 +60,60 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <NavigationMenu viewport={false}>
-              <NavigationMenuItem >
-
-                <NavigationMenuTrigger className=" bg-amber-900 text-white hover:text-amber-200 transition-colors space-x-0 p-0"> Nos cafés </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3">
-                    <NavigationMenuLink asChild>
-                      <li>
-                        <NavigationMenuLink asChild>
-                        </NavigationMenuLink>
+            <NoSSR fallback={<div className="text-white">Nos cafés</div>}>
+              <NavigationMenu viewport={false}>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className=" bg-amber-900 text-white hover:text-amber-200 transition-colors space-x-0 p-0"> Nos cafés </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3">
+                      <NavigationMenuLink asChild>
                         <Link href="/cafesGrain">
                           <div className=" font-medium">café en grain</div>
-
                         </Link>
-                      </li>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink asChild>
-                      <Link href="/cafesMoulu">
-                        <div className=" font-medium">café en moulu</div>
-
-                      </Link>
-                    </NavigationMenuLink>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenu>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                        <Link href="/cafesMoulu">
+                          <div className=" font-medium">café en moulu</div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenu>
+            </NoSSR>
             {/* menu déroulant */}
             {isOpen && (
-              <ul >
-                <button onClick={() => setIsOpen(false)}>
-                  <li className="text-white hover:text-amber-200 font-medium">cafés en grain</li>
-                  <li className="text-white hover:text-amber-200 font-medium">cafés en moulu</li>
-                </button>
+              <ul>
+                <li>
+                  <button onClick={() => setIsOpen(false)} className="text-white hover:text-amber-200 font-medium">
+                    cafés en grain
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => setIsOpen(false)} className="text-white hover:text-amber-200 font-medium">
+                    cafés en moulu
+                  </button>
+                </li>
               </ul>
             )}
 
 
             {/* Bouton d'authentification */}
             <div className="hidden lg:flex items-center space-x-8 ml-6 relative left-90">
-              <SignedOut>
-                <Link href="/auth">
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className=" text-white hover:text-amber-200 transition-colors font-medium ml-4">
-                    S&apos;inscrire / Se connecter
-                  </button>
-                </Link>
-              </SignedOut>
-              <SignedIn>
-                <UserButton />
-              </SignedIn>
+              <NoSSR>
+                <SignedOut>
+                  <Link href="/auth">
+                    <button
+                      onClick={() => setIsOpen(false)}
+                      className=" text-white hover:text-amber-200 transition-colors font-medium ml-4">
+                      S&apos;inscrire / Se connecter
+                    </button>
+                  </Link>
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
+              </NoSSR>
               {/* Panier */}
               <button
                 onClick={handleCardOpen}
@@ -156,18 +160,20 @@ export default function Navbar() {
 
                 {/* Bouton d'authentification mobile */}
                 <div className="pt-4 border-t border-amber-700 space-y-2">
-                  <SignedOut>
-                    <Link href="/auth" onClick={() => setIsOpen(false)}>
-                      <button className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-md font-medium py-2 cursor-pointer">
-                        S&apos;inscrire / Se connecter
-                      </button>
-                    </Link>
-                  </SignedOut>
-                  <SignedIn>
-                    <div className="flex justify-center">
-                      <UserButton />
-                    </div>
-                  </SignedIn>
+                  <NoSSR>
+                    <SignedOut>
+                      <Link href="/auth" onClick={() => setIsOpen(false)}>
+                        <button className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-md font-medium py-2 cursor-pointer">
+                          S&apos;inscrire / Se connecter
+                        </button>
+                      </Link>
+                    </SignedOut>
+                    <SignedIn>
+                      <div className="flex justify-center">
+                        <UserButton />
+                      </div>
+                    </SignedIn>
+                  </NoSSR>
 
                   <Link
                     href="/panier"

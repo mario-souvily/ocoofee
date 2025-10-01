@@ -30,6 +30,8 @@ export default function RootLayout({
       signUpUrl="/auth#sign-up"
       signInFallbackRedirectUrl="/"
       signUpFallbackRedirectUrl="/"
+      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+
     >
       <html lang="fr">
         <head>
