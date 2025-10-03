@@ -225,7 +225,7 @@ async function main() {
       quantite: "250g",
       description: "Café équilibré, légèrement fruité.",
       prix: 9.0,
-      image: "/image/mexique-chiapas.jpg",
+      image: "/image/cafe/mexique-chiapas.jpg",
       categorie: "moulu",
     },
   ];
