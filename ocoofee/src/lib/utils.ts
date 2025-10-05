@@ -19,3 +19,7 @@ export function isStrongPass(pass: string) {
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*_=+\-;]).{8,}$/;
   return strongPass.test(pass);
 }
+
+export function formatPrice(price: number): string {
+  return price.toFixed(2);
+}

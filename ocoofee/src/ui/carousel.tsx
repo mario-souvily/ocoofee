@@ -1,3 +1,4 @@
+import { formatPrice } from "@/lib/utils";
 import { SignedIn } from '@clerk/nextjs';
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -120,7 +121,7 @@ export function CarouselSize() {
 
                   <div className="flex justify-between items-center">
                     <span className="text-xl font-bold text-amber-600">
-                      {coffeeItem.prix} €
+                      {formatPrice(coffeeItem.prix)} €
                     </span>
                     <div className="flex space-x-2 ">
                       <button className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-sm transition-colors">
