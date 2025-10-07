@@ -3,17 +3,6 @@ import { IInscription } from "@/@types";
 import { prisma } from "@/lib/prisma";
 import { isEmail, isStrongPass, sanitizeUser } from "@/lib/utils";
 
-// export async function getInscription() {
-//   try {
-//     const inscriptions = await prisma.user.findMany({
-//       where: { role: { equals: false } },
-//     });
-//     return { ok: true, data: inscriptions } as const;
-//   } catch (e) {
-//     return { ok: false, message: "Erreur lors de la récupération" } as const;
-//   }
-// }
-
 // Cette fonction POST permet de créer un nouvel utilisateur dans la base de données via Prisma.
 // Elle retourne un objet JSON contenant le nouvel utilisateur si la création réussit, sinon une erreur 400.
 export async function postInscription(inscription: IInscription) {

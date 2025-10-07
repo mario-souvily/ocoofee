@@ -1,25 +1,71 @@
-import { ICoffeemoulu } from "@/@types/index";
-import { getCoffeeMoulu } from "@/app/action/product";
+"use server";
 
-export default async function CoffeeMoulu() {
+import { ICoffeemoulu } from "@/@types";
+import { getCoffeeMoulu } from "@/app/action/product";
+import { formatPrice } from "@/lib/utils";
+import ImageComponent from "./image";
+//import { useRouter } from "next/navigation";
+
+export default async function CoffeeFilter() {
+  //const router = useRouter(); 
   const coffee = await getCoffeeMoulu();
   if (!coffee) {
     return <div>No coffee found</div>;
   }
-
   return (
-    <div>
-      {coffee.map((coffee: ICoffeemoulu) => (
-        <div key={coffee.id}>
-          <h1>{coffee.nom}</h1>
-          <p>{coffee.type}</p>
-          <p>{coffee.origine}</p>
-          <p>{coffee.quantite}</p>
-          <p>{coffee.description}</p>
-          <p>{coffee.prix} €</p>
-          <p>{coffee.image}</p>
-        </div>
-      ))}
+
+    <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+
+        {coffee.length === 0 && <div>No coffee found</div>}
+        {coffee.map((coffee: ICoffeemoulu) => (
+          <div
+            key={coffee.id}
+            className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow" >
+
+            <div className="h-64 bg-gradient-to-br from-amber-200  flex items-center justify-center relative overflow-hidden">
+              <ImageComponent
+                src={coffee.image}
+                alt={coffee.nom}
+                width={400}
+                height={400} />
+
+              <div className="absolute top-4 right-4 bg-white/90 text-amber-800 px-2 py-1 rounded-full text-xs font-semibold">
+                {coffee.origine}
+              </div>
+            </div>
+
+            {/* Contenu */}
+            < div className="p-6" >
+              <div className="mb-3">
+                <span className="text-amber-600 font-semibold text-sm uppercase tracking-wide">
+                  {coffee.type}
+                </span>
+              </div>
+
+              <h3 className="text-xl font-semibold mb-3 text-amber-800 line-clamp-2">
+                {coffee.nom}
+              </h3>
+
+              <p className="text-gray-600 mb-4 text-sm line-clamp-3">
+                {coffee.description}
+              </p>
+
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-amber-600 font-semibold text-sm">
+                  {coffee.quantite}
+                </span>
+                <span className="text-2xl font-bold text-amber-600">
+                  {formatPrice(coffee.prix)} €
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
+
+
   );
 }

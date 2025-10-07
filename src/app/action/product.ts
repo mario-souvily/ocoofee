@@ -1,6 +1,7 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 
+// serveur action pour recuperer tous les cafés moulu et grain trier par prix asc
 export async function getCoffee() {
   const coffees = await prisma.cafe.findMany({
     where: {
@@ -15,12 +16,12 @@ export async function getCoffee() {
   });
   return coffees;
 }
-
+// serveur action pour recuperer tous les cafés
 export async function getAllCoffee() {
   const coffees = await prisma.cafe.findMany({});
   return coffees;
 }
-
+// serveur action pour recuperer tous les cafés moulu
 export async function getCoffeeMoulu() {
   const coffees = await prisma.cafe.findMany({
     where: {
@@ -33,7 +34,7 @@ export async function getCoffeeMoulu() {
 
   return coffees;
 }
-
+// serveur action pour recuperer tous les cafés grain
 export async function getCoffeeGrain() {
   const coffees = await prisma.cafe.findMany({
     where: {

@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { getAllCoffee } from "@/app/action/product";
 import { formatPrice } from "@/lib/utils";
 import ImageComponent from "@/ui/image";
 import { SignedIn } from "@clerk/nextjs";
@@ -18,11 +18,8 @@ import { BiSolidCoffeeBean } from "react-icons/bi";
 // }
 
 export default async function AllCoffeePage() {
-  const allCoffee = await prisma.cafe.findMany({
-    orderBy: {
-      prix: "asc",
-    },
-  });
+  const allCoffee = await getAllCoffee();
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
@@ -42,17 +39,15 @@ export default async function AllCoffeePage() {
       <div className="bg-white border-b">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex flex-wrap gap-4 justify-center">
-            <button className="px-6 py-2 rounded-full bg-amber-600 text-white font-semibold hover:bg-amber-700 transition-colors">
+            <a href="/coffee/all" className="px-6 py-2 rounded-full bg-amber-600 text-white font-semibold hover:bg-amber-700 transition-colors">
               Tous
-            </button>
-            <button className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
-
-              Grains
-            </button>
-            <button className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
-
+            </a>
+            <a href="/coffeeMoulu" className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
               Moulus
-            </button>
+            </a>
+            <a href="/coffeeGrain" className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
+              Grains
+            </a>
           </div>
         </div>
       </div>
