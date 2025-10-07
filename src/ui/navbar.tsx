@@ -1,7 +1,5 @@
 "use client";
 
-
-
 import CarteModal from "@/components/carteModal";
 import NoSSR from "@/components/NoSSR";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuTrigger } from '@/components/ui/navigation-menu';
@@ -67,13 +65,13 @@ export default function Navbar() {
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3">
                       <NavigationMenuLink asChild>
-                        <Link href="/cafesGrain">
+                        <Link href="/cafes/grain">
                           <div className=" font-medium">café en grain</div>
                         </Link>
                       </NavigationMenuLink>
                       <NavigationMenuLink asChild>
-                        <Link href="/cafesMoulu">
-                          <div className=" font-medium">café en moulu</div>
+                        <Link href="/cafes/moulu">
+                          <div className=" font-medium">café moulu</div>
                         </Link>
                       </NavigationMenuLink>
                     </ul>
@@ -91,7 +89,7 @@ export default function Navbar() {
                 </li>
                 <li>
                   <button onClick={() => setIsOpen(false)} className="text-white hover:text-amber-200 font-medium">
-                    cafés en moulu
+                    cafés moulu
                   </button>
                 </li>
               </ul>

@@ -42,10 +42,10 @@ export default async function AllCoffeePage() {
             <a href="/coffee/all" className="px-6 py-2 rounded-full bg-amber-600 text-white font-semibold hover:bg-amber-700 transition-colors">
               Tous
             </a>
-            <a href="/coffeeMoulu" className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
+            <a href="/cafes/moulu" className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
               Moulus
             </a>
-            <a href="/coffeeGrain" className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
+            <a href="/cafes/grain" className="px-6 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
               Grains
             </a>
           </div>

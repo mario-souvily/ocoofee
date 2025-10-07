@@ -42,7 +42,7 @@ export async function getCoffeeGrain() {
     },
   });
   if (!coffees || coffees.length === 0) {
-    return Response.json({ error: "No coffees found" }, { status: 404 });
+    return [];
   }
 
   return coffees;
