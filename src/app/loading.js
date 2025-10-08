@@ -1,4 +1,4 @@
-import CarouselSkeleton from "@/ui/carousel-skeleton";
+import CarouselSkeleton from "@/components/ui/carousel-skeleton";
 
 export default function Loading() {
   // Skeleton de chargement pour le carousel uniquement

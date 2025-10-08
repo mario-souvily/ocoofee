@@ -1,4 +1,4 @@
-import CoffeeMoulu from "@/ui/cafesMoulu";
+import CoffeeMoulu from "@/components/ui/cafesMoulu";
 
 export default function MouluPage() {
   return (

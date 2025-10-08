@@ -1,5 +1,5 @@
 "use client";
-import { CarouselSize } from "@/ui/carousel";
+import { CarouselSize } from "@/components/ui/carousel";
 import { useRouter } from "next/navigation";
 import { GiCoffeeBeans } from "react-icons/gi";
 
@@ -132,9 +132,9 @@ export default function Home() {
             <a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">
               À propos
             </a>
-            <a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">
+            <button onClick={() => router.push("/coffee/all")} className="text-gray-400 hover:text-amber-400 transition-colors">
               Nos cafés
-            </a>
+            </button>
             <a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">
               Contact
             </a>

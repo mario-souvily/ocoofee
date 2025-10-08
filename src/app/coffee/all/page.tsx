@@ -1,6 +1,6 @@
 import { getAllCoffee } from "@/app/action/product";
+import ImageComponent from "@/components/ui/image";
 import { formatPrice } from "@/lib/utils";
-import ImageComponent from "@/ui/image";
 import { SignedIn } from "@clerk/nextjs";
 import { BiSolidCoffeeBean } from "react-icons/bi";
 
