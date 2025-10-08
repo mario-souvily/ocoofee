@@ -135,9 +135,9 @@ export default function Home() {
             <button onClick={() => router.push("/coffee/all")} className="text-gray-400 hover:text-amber-400 transition-colors">
               Nos cafés
             </button>
-            <a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">
+            <button onClick={() => router.push("/contact")} className="text-gray-400 hover:text-amber-400 transition-colors">
               Contact
-            </a>
+            </button>
           </div>
           <p className="text-gray-500 text-sm">
             © 2025 Mario Souvily - Tous droits réservés
