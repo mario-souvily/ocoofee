@@ -1,6 +1,5 @@
 import { formatPrice } from "@/lib/utils";
 import { SignedIn } from '@clerk/nextjs';
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CarouselSkeleton from "./carousel-skeleton";
 import ImageComponent from "./image";
@@ -19,7 +18,6 @@ interface ICoffee {
 
 export function CarouselSize() {
   const [coffee, setCoffee] = useState<ICoffee[]>([]);
-  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -88,7 +86,7 @@ export function CarouselSize() {
           className="flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}
         >
-          {coffee.map((coffeeItem, index) => (
+          {coffee.map((coffeeItem) => (
             <div
               key={coffeeItem.id}
               className="w-1/3 flex-shrink-0 px-4"
