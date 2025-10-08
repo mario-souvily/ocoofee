@@ -46,3 +46,7 @@ yarn-error.log*
 
 # Prisma generated (if used)
 /generated/prisma
+
+# React Email
+.react-email/
+react-email.config.js
