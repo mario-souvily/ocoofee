@@ -50,3 +50,4 @@ yarn-error.log*
 # React Email
 .react-email/
 react-email.config.js
+.react-email-starter
