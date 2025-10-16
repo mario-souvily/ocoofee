@@ -2,6 +2,7 @@ import Navbar from "@/components/ui/navbar";
 import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ProductProvider } from "./Context/CarteContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -54,10 +55,12 @@ export default function RootLayout({
           cz-shortcut-listen="true"
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <Navbar />
-          <main className="pt-16">
-            {children}
-          </main>
+          <ProductProvider>
+            <Navbar />
+            <main className="pt-16">
+              {children}
+            </main>
+          </ProductProvider>
         </body>
       </html>
     </ClerkProvider>

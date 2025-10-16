@@ -1,26 +1,8 @@
 import { getAllCoffee } from "@/app/action/product";
-import ImageComponent from "@/components/ui/image";
-import { formatPrice } from "@/lib/utils";
-import { SignedIn } from "@clerk/nextjs";
-import { BiSolidCoffeeBean } from "react-icons/bi";
-
-
-// interface ICoffee {
-//   id: number;
-//   nom: string;
-//   type: string;
-//   origine: string;
-//   quantite: string;
-//   description: string;
-//   prix: number;
-//   image: string;
-//   categorie: string;
-// }
+import Card from "@/app/coffee/all/Card";
 
 export default async function AllCoffeePage() {
   const allCoffee = await getAllCoffee();
-
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
       {/* Header */}
@@ -56,64 +38,7 @@ export default async function AllCoffeePage() {
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {allCoffee.map((coffee) => (
-            <div
-              key={coffee.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
-            >
-              {/* Image */}
-              <div className="h-64 bg-gradient-to-br from-amber-200  flex items-center justify-center relative overflow-hidden">
-                <ImageComponent
-                  src={coffee.image}
-                  alt={coffee.nom}
-                  width={400}
-                  height={400}
-                />
-                <div className="absolute top-4 left-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
-                  <BiSolidCoffeeBean />
-                  {coffee.categorie === 'grain' ? 'Grain' : 'Moulu'}
-                </div>
-                <div className="absolute top-4 right-4 bg-white/90 text-amber-800 px-2 py-1 rounded-full text-xs font-semibold">
-                  {coffee.origine}
-                </div>
-              </div>
-
-              {/* Contenu */}
-              <div className="p-6">
-                <div className="mb-3">
-                  <span className="text-amber-600 font-semibold text-sm uppercase tracking-wide">
-                    {coffee.type}
-                  </span>
-                </div>
-
-                <h3 className="text-xl font-semibold mb-3 text-amber-800 line-clamp-2">
-                  {coffee.nom}
-                </h3>
-
-                <p className="text-gray-600 mb-4 text-sm line-clamp-3">
-                  {coffee.description}
-                </p>
-
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-amber-600 font-semibold text-sm">
-                    {coffee.quantite}
-                  </span>
-                  <span className="text-2xl font-bold text-amber-600">
-                    {formatPrice(coffee.prix)} €
-                  </span>
-                </div>
-
-                <div className="flex space-x-3">
-                  <button className="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-full text-sm font-semibold transition-colors">
-                    Voir le produit
-                  </button>
-                  <SignedIn>
-                    <button className="flex-1 bg-amber-800 hover:bg-amber-900 text-white py-2 px-4 rounded-full text-sm font-semibold transition-colors">
-                      Ajouter au panier
-                    </button>
-                  </SignedIn>
-                </div>
-              </div>
-            </div>
+            <Card key={coffee.id} product={coffee} />
           ))}
         </div>
 
