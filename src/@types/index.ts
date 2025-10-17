@@ -7,6 +7,7 @@ export interface ICoffeegrain {
   description: string;
   prix: number;
   image: string;
+  quantityInCart?: number; // Quantité dans le panier
 }
 
 export interface ICoffeemoulu {
@@ -18,6 +19,7 @@ export interface ICoffeemoulu {
   description: string;
   prix: number;
   image: string;
+  quantityInCart?: number; // Quantité dans le panier
 }
 export interface ICoffee {
   id: number;
@@ -29,6 +31,7 @@ export interface ICoffee {
   prix: number;
   image: string;
   categorie: string;
+  quantityInCart?: number; // Quantité dans le panier
 }
 
 export interface IUser {

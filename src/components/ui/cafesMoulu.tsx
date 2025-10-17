@@ -3,6 +3,7 @@
 import { ICoffeemoulu } from "@/@types";
 import { getCoffeeMoulu } from "@/app/action/product";
 import { formatPrice } from "@/lib/utils";
+import { SignedIn } from "@clerk/nextjs";
 import ImageComponent from "./image";
 
 
@@ -87,6 +88,11 @@ export default async function CoffeeFilter() {
                       {formatPrice(coffee.prix)} €
                     </span>
                   </div>
+                  <SignedIn>
+                    <button className="bg-amber-800 hover:bg-amber-900 text-white px-3 py-1 rounded-full text-sm transition-colors">
+                      Ajouter au panier
+                    </button>
+                  </SignedIn>
                 </div>
               </div>
             ))}

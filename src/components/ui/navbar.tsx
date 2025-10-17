@@ -21,7 +21,7 @@ export default function Navbar() {
     setCardModalOpen(!cardModalOpen)
   }
   const { products } = useProduct();
-  const totalQuantity = products.reduce((acc, product) => acc + parseInt(product.quantite), 0);
+  const totalQuantity = products.reduce((acc, product) => acc + (product.quantityInCart || 0), 0);
 
   const [links] = useState<{ name: string; href: string }[]>([
     { name: "Accueil", href: "/" },

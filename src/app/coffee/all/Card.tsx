@@ -8,12 +8,16 @@ import { SignedIn } from "@clerk/nextjs";
 import { BiSolidCoffeeBean } from "react-icons/bi";
 
 export default function Card({ product }: { product: ICoffee | ICoffeegrain | ICoffeemoulu }) {
-  const { addToCart } = useProduct();
+  const { addToCart, products } = useProduct();
 
   const handleAddToCart = () => {
     addToCart(product);
     alert(`${product.nom} a été ajouté au panier`); // Simple alert en attendant une librairie toast
   };
+
+  // Trouver le produit dans le panier pour afficher sa quantité
+  const productInCart = products.find(p => p.id === product.id);
+  const quantityInCart = productInCart?.quantityInCart || 0;
 
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
@@ -51,9 +55,16 @@ export default function Card({ product }: { product: ICoffee | ICoffeegrain | IC
         </p>
 
         <div className="flex items-center justify-between mb-4">
-          <span className="text-amber-600 font-semibold text-sm">
-            {product.quantite}
-          </span>
+          <div className="flex flex-col">
+            <span className="text-amber-600 font-semibold text-sm">
+              {product.quantite}g
+            </span>
+            {quantityInCart > 0 && (
+              <span className="text-green-600 font-bold text-xs">
+                Dans le panier: {quantityInCart}
+              </span>
+            )}
+          </div>
           <span className="text-2xl font-bold text-amber-600">
             {formatPrice(product.prix)} €
           </span>

@@ -23,38 +23,41 @@ export const ProductProvider: React.FC<productProviderProps> = ({ children }) =>
   // pour ajouter un produit au panier
   const addToCart = (product: ICoffee | ICoffeegrain | ICoffeemoulu) => {
     const existingProductIndex = products.findIndex(p => p.id === product.id);
+
     if (existingProductIndex !== -1) {
-      const updatedproduct = [...products];
-      updatedproduct[existingProductIndex].quantite = (parseInt(updatedproduct[existingProductIndex].quantite) + 1).toString();
-      setProducts(updatedproduct);
+      // Produit déjà dans le panier, incrémenter la quantité dans le panier
+      const updatedProducts = [...products];
+      if (updatedProducts[existingProductIndex]) {
+        updatedProducts[existingProductIndex]!.quantityInCart = (updatedProducts[existingProductIndex]!.quantityInCart || 0) + 1;
+      }
+      setProducts(updatedProducts);
     } else {
-      setProducts([...products, product]);
+      // Nouveau produit, l'ajouter avec quantityInCart = 1
+      const productWithCartQuantity = { ...product, quantityInCart: 1 };
+      setProducts([...products, productWithCartQuantity]);
     }
   };
 
-  // pour decrementer la quantite d'un produit
+  // pour decrementer la quantite d'un produit dans le panier
   const decrementquantity = (id: number) => {
     const updatedProducts = products.map(product => {
       if (product.id === id) {
-        const newQuantity = parseInt(product.quantite) - 1;
-        if (newQuantity <= 0) {
-          return null;
+        const newCartQuantity = (product.quantityInCart || 0) - 1;
+        if (newCartQuantity <= 0) {
+          return null; // Supprimer du panier si quantité = 0
         }
-        return { ...product, quantite: newQuantity.toString() };
+        return { ...product, quantityInCart: newCartQuantity };
       }
       return product;
     }).filter(product => product !== null) as ICoffee[] | ICoffeegrain[] | ICoffeemoulu[];
 
     setProducts(updatedProducts);
   };
-  // pour incrementer la quantite d'un produit
+  // pour incrementer la quantite d'un produit dans le panier
   const incrementquantity = (id: number) => {
     setProducts(products.map(product =>
-      //si le produit est le meme, incrementer la quantite
       product.id === id
-        //sinon retourner le produit
-        ? { ...product, quantite: (parseInt(product.quantite) + 1).toString() }
-        //sinon retourner le produit
+        ? { ...product, quantityInCart: (product.quantityInCart || 0) + 1 }
         : product
     ));
   };
