@@ -2,6 +2,7 @@
 import { IInscription } from "@/@types";
 import { prisma } from "@/lib/prisma";
 import { isEmail, isStrongPass, sanitizeUser } from "@/lib/utils";
+import argon2 from "argon2";
 
 // Cette fonction POST permet de créer un nouvel utilisateur dans la base de données via Prisma.
 // Elle retourne un objet JSON contenant le nouvel utilisateur si la création réussit, sinon une erreur 400.
@@ -11,11 +12,11 @@ export async function postInscription(inscription: IInscription) {
       !inscription?.prenom ||
       !inscription?.nom ||
       !inscription?.email ||
-      !inscription?.clerkId
+      !inscription?.password
     ) {
       return { ok: false, message: "Champs requis manquants" } as const;
     }
-    if (!isStrongPass(inscription.clerkId)) {
+    if (!isStrongPass(inscription.password)) {
       return {
         ok: false,
         message:
@@ -39,7 +40,7 @@ export async function postInscription(inscription: IInscription) {
         prenom: inscription.prenom,
         nom: inscription.nom,
         email: inscription.email,
-        clerkId: inscription.clerkId,
+        clerkId: await argon2.hash(inscription.password),
         role: false,
       },
     });

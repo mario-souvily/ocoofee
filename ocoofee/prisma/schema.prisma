@@ -25,6 +25,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   commandes Commande[]
+  carts     Cart[]
 }
 
 model Cafe {
@@ -38,7 +39,8 @@ model Cafe {
   image       String
   categorie   String // "grain" | "moulu"
 
-  items CommandeItem[]
+  items    CommandeItem[]
+  CartItem CartItem[]
 }
 
 model Commande {
@@ -50,8 +52,9 @@ model Commande {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user  User           @relation(fields: [userId], references: [id])
-  items CommandeItem[]
+  user      User           @relation(fields: [userId], references: [id])
+  items     CommandeItem[]
+  cartItems CartItem[]
 }
 
 model CommandeItem {
@@ -63,4 +66,27 @@ model CommandeItem {
 
   commande Commande @relation(fields: [commandeId], references: [id])
   cafe     Cafe     @relation(fields: [cafeId], references: [id])
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  userId    String // 🔹 userId de Clerk
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  user      User       @relation(fields: [userId], references: [clerkId])
+  items     CartItem[]
+}
+
+model CartItem {
+  id       Int    @id @default(autoincrement())
+  userId   String
+  cartId   Int
+  cafeId   Int
+  quantite Int
+  prix     Float
+
+  cart       Cart      @relation(fields: [cartId], references: [id])
+  cafe       Cafe      @relation(fields: [cafeId], references: [id])
+  Commande   Commande? @relation(fields: [commandeId], references: [id])
+  commandeId Int?
 }

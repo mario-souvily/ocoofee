@@ -1,5 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
+// liste des routes publiques qui ne necessite pas d'authentification
 const isPublicRoute = createRouteMatcher([
   "/coffee/all(.*)",
   "/cafes/grain(.*)",
@@ -14,7 +15,9 @@ const isPublicRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
+  // si la route n'est pas publique, on protege la route
   if (!isPublicRoute(req)) {
+    // on protege la route
     await auth.protect();
   }
 });
