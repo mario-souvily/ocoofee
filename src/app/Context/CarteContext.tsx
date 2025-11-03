@@ -20,7 +20,7 @@ const ProductContext = createContext<IProductContext | undefined>(undefined);
 export const ProductProvider: React.FC<productProviderProps> = ({ children }) => {
   const [products, setProducts] = useState<ICoffee[] | ICoffeegrain[] | ICoffeemoulu[]>([]);
   // fonction pour ajouter un produit au panier
-  // pour ajouter un produit au panier
+
   const addToCart = (product: ICoffee | ICoffeegrain | ICoffeemoulu) => {
     const existingProductIndex = products.findIndex(p => p.id === product.id);
     // si le produit existe deja dans le panier, on incremente la quantite dans le panier
