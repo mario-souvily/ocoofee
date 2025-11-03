@@ -49,6 +49,7 @@ export async function postInscription(inscription: IInscription) {
       data: sanitizeUser(user),
     } as const;
   } catch (e) {
+    console.error(e);
     return { ok: false, message: "Erreur serveur" } as const;
   }
 }

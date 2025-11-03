@@ -48,9 +48,10 @@ export interface IInscription {
   prenom: string;
   nom: string;
   email: string;
-  clerkId: string;
+  username?: string;
+  password: string;
 }
 export interface ILogin {
   email: string;
-  clerkId: string;
+  password: string;
 }

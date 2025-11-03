@@ -11,7 +11,7 @@ export default function AuthPage() {
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 py-8">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-amber-900">Bienvenue</h1>
-        <p className="text-gray-600 text-lg mt-5">Connectez-vous ou créez votre compte.</p>
+        <p className="text-gray-600 text-lg mt-5">Rejoignez Ocoofee en quelques secondes. Connectez-vous ou créez votre compte.</p>
       </div>
       <div className="flex items-center justify-center mb-8 gap-3">
         <button

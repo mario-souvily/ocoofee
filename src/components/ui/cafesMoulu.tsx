@@ -2,9 +2,7 @@
 
 import { ICoffeemoulu } from "@/@types";
 import { getCoffeeMoulu } from "@/app/action/product";
-import { formatPrice } from "@/lib/utils";
-import { SignedIn } from "@clerk/nextjs";
-import ImageComponent from "./image";
+import Card from "@/app/coffee/all/Card";
 
 
 export default async function CoffeeFilter() {
@@ -46,55 +44,8 @@ export default async function CoffeeFilter() {
         </div >
         <div className="max-w-6xl mx-auto px-4 py-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            {coffee.map((coffee: ICoffeemoulu) => (
-              <div
-                key={coffee.id}
-                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow" >
-
-                <div className="h-64 bg-gradient-to-br from-amber-200 flex items-center justify-center relative overflow-hidden">
-                  <ImageComponent
-                    src={coffee.image}
-                    alt={coffee.nom}
-                    width={400}
-                    height={400} />
-
-                  <div className="absolute top-4 right-4 bg-white/90 text-amber-800 px-2 py-1 rounded-full text-xs font-semibold">
-                    {coffee.origine}
-                  </div>
-                </div>
-
-                {/* Contenu */}
-                < div className="p-6" >
-                  <div className="mb-3">
-                    <span className="text-amber-600 font-semibold text-sm uppercase tracking-wide">
-                      {coffee.type}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-semibold mb-3 text-amber-800 line-clamp-2">
-                    {coffee.nom}
-                  </h3>
-
-                  <p className="text-gray-600 mb-4 text-sm line-clamp-3">
-                    {coffee.description}
-                  </p>
-
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-amber-600 font-semibold text-sm">
-                      {coffee.quantite}
-                    </span>
-                    <span className="text-2xl font-bold text-amber-600">
-                      {formatPrice(coffee.prix)} €
-                    </span>
-                  </div>
-                  <SignedIn>
-                    <button className="bg-amber-800 hover:bg-amber-900 text-white px-3 py-1 rounded-full text-sm transition-colors">
-                      Ajouter au panier
-                    </button>
-                  </SignedIn>
-                </div>
-              </div>
+            {coffee.map((c: ICoffeemoulu) => (
+              <Card key={c.id} product={c} />
             ))}
           </div>
         </div>

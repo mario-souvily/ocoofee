@@ -14,16 +14,16 @@ interface IProductContext {
 interface productProviderProps {
   children: React.ReactNode;
 }
-
+// context pour le panier de produits
 const ProductContext = createContext<IProductContext | undefined>(undefined);
-
+// provider pour le panier de produits qui va permetre de gerer le panier de produits
 export const ProductProvider: React.FC<productProviderProps> = ({ children }) => {
   const [products, setProducts] = useState<ICoffee[] | ICoffeegrain[] | ICoffeemoulu[]>([]);
-
+  // fonction pour ajouter un produit au panier
   // pour ajouter un produit au panier
   const addToCart = (product: ICoffee | ICoffeegrain | ICoffeemoulu) => {
     const existingProductIndex = products.findIndex(p => p.id === product.id);
-
+    // si le produit existe deja dans le panier, on incremente la quantite dans le panier
     if (existingProductIndex !== -1) {
       // Produit déjà dans le panier, incrémenter la quantité dans le panier
       const updatedProducts = [...products];

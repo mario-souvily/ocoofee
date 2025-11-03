@@ -85,7 +85,7 @@ export default function Inscription() {
           <input
             type="password"
             id="pass"
-            name="pass"
+            name="password"
             required
             className="border-2 border-gray-300 rounded-md p-2"
             placeholder="******"
