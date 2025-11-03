@@ -2,6 +2,7 @@
 
 import { ICoffee, ICoffeegrain, ICoffeemoulu } from "@/@types/index";
 import { createContext, useContext, useState } from "react";
+import { addToCart as addToCartDB } from "../action/commande";
 
 interface IProductContext {
   products: ICoffee[] | ICoffeegrain[] | ICoffeemoulu[];
@@ -21,7 +22,7 @@ export const ProductProvider: React.FC<productProviderProps> = ({ children }) =>
   const [products, setProducts] = useState<ICoffee[] | ICoffeegrain[] | ICoffeemoulu[]>([]);
   // fonction pour ajouter un produit au panier
 
-  const addToCart = (product: ICoffee | ICoffeegrain | ICoffeemoulu) => {
+  const addToCart = async (product: ICoffee | ICoffeegrain | ICoffeemoulu) => {
     const existingProductIndex = products.findIndex(p => p.id === product.id);
     // si le produit existe deja dans le panier, on incremente la quantite dans le panier
     if (existingProductIndex !== -1) {
@@ -35,6 +36,12 @@ export const ProductProvider: React.FC<productProviderProps> = ({ children }) =>
       // Nouveau produit, l'ajouter avec quantityInCart = 1
       const productWithCartQuantity = { ...product, quantityInCart: 1 };
       setProducts([...products, productWithCartQuantity]);
+    }
+    try {
+      // ajouter le produit au panier dans la base de donnees
+      await addToCartDB(product.id, 1, product.prix);
+    } catch (error) {
+      console.error("Erreur lors de l'ajout du produit au panier", error);
     }
   };
 
