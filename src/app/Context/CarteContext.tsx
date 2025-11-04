@@ -1,8 +1,8 @@
 "use client";
 
 import { ICoffee, ICoffeegrain, ICoffeemoulu } from "@/@types/index";
-import { createContext, useContext, useState } from "react";
-import { addToCart as addToCartDB } from "../action/commande";
+import { createContext, useContext, useEffect, useState } from "react";
+import { addToCart as addToCartDB, getCartFromDB } from "../action/commande";
 
 interface IProductContext {
   products: ICoffee[] | ICoffeegrain[] | ICoffeemoulu[];
@@ -21,7 +21,19 @@ const ProductContext = createContext<IProductContext | undefined>(undefined);
 export const ProductProvider: React.FC<productProviderProps> = ({ children }) => {
   const [products, setProducts] = useState<ICoffee[] | ICoffeegrain[] | ICoffeemoulu[]>([]);
   // fonction pour ajouter un produit au panier
+  // recuperer le panier de l'utilisateur
 
+  useEffect(() => {
+    const fetchCartFromDB = async () => {
+      try {
+        const products = await getCartFromDB();
+        setProducts(products);
+      } catch (error) {
+        console.error("Erreur lors du chargement du panier :", error);
+      }
+    };
+    fetchCartFromDB();
+  }, []);
   const addToCart = async (product: ICoffee | ICoffeegrain | ICoffeemoulu) => {
     const existingProductIndex = products.findIndex(p => p.id === product.id);
     // si le produit existe deja dans le panier, on incremente la quantite dans le panier
@@ -75,6 +87,7 @@ export const ProductProvider: React.FC<productProviderProps> = ({ children }) =>
   // retourner les produits du panier
   return <ProductContext.Provider value={{ products, addToCart, decrementquantity, incrementquantity, removeitem, setCarte: setProducts }}>{children}</ProductContext.Provider>;
 };
+// fonction pour recuperer le panier de l'utilisateur
 export const useProduct = () => {
   const context = useContext(ProductContext);
   if (!context) {

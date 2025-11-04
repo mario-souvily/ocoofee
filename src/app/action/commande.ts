@@ -1,4 +1,5 @@
 "use server";
+import { ICoffee, ICoffeegrain, ICoffeemoulu } from "@/@types";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
@@ -25,26 +26,31 @@ export async function addToCart(
   let cart = await prisma.cart.findFirst({
     where: { userId: clerkId },
   });
+  //si le panier n'existe pas, le creer
   if (!cart) {
     cart = await prisma.cart.create({
       data: { userId: clerkId },
     });
   }
 
+  //verifier si le produit existe deja dans le panier
   const existingItem = await prisma.cartItem.findFirst({
     where: { cafeId: cafeId, cartId: cart.id },
   });
+  //si le produit existe deja dans le panier, incremente la quantite
   if (existingItem) {
     await prisma.cartItem.update({
       where: { id: existingItem?.id },
       data: { quantite: (existingItem?.quantite ?? 0) + quantite },
     });
+    // sinon, ajouter le produit au panier
   } else {
     await prisma.cartItem.create({
       data: { cafeId, quantite, prix, cartId: cart.id, userId: clerkId },
     });
   }
 }
+// fonction pour supprimer un produit du panier
 export async function removeFromCartDB(cafeId: number) {
   const { userId } = await auth();
   if (!userId) throw new Error("Utilisateur non connecté");
@@ -68,6 +74,7 @@ export async function validateCommande(adresse: string) {
   if (!userId) {
     return { error: "Utilisateur non trouvé" };
   }
+  //recuperer l'utilisateur
   const user = await prisma.user.findUnique({
     where: { clerkId: userId },
   });
@@ -84,13 +91,13 @@ export async function validateCommande(adresse: string) {
   if (!cart) {
     return { error: "Panier non trouvé" };
   }
-
+  // calculer le prix total de la commande
   const prix = cart.items.reduce(
     (acc: number, item: { prix: number; quantite: number }) =>
       acc + item.prix * item.quantite,
     0
   );
-
+  // creation de la commande et ajout des items dans la commande
   const commande = await prisma.commande.create({
     data: {
       userId: user.id,
@@ -108,8 +115,53 @@ export async function validateCommande(adresse: string) {
   });
   console.log("commande", commande);
 
+  // supprimer le panier
   await prisma.cart.delete({
     where: { id: cart?.id },
   });
   return { success: "Commande créée avec succès" };
+}
+
+// fonction pour recuperer le panier de l'utilisateur
+
+export async function getCartFromDB(): Promise<
+  ICoffee[] | ICoffeegrain[] | ICoffeemoulu[]
+> {
+  const { userId } = await auth();
+  if (!userId) {
+    return [];
+  }
+  const user = await prisma.user.findFirst({
+    where: { clerkId: userId },
+    include: {
+      carts: {
+        include: {
+          items: {
+            include: {
+              cafe: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  if (!user || user.carts.length === 0) {
+    return [];
+  }
+  return user.carts[0].items.map(
+    (item: {
+      cafe: ICoffee | ICoffeegrain | ICoffeemoulu;
+      quantite: number;
+    }) => ({
+      id: item.cafe.id as number,
+      nom: item.cafe.nom,
+      prix: item.cafe.prix as number,
+      quantite: item.quantite.toString(),
+      image: item.cafe.image,
+      type: item.cafe.type as string,
+      origine: item.cafe.origine as string,
+      description: item.cafe.description as string,
+      categorie: (item.cafe as ICoffee).categorie as string,
+    })
+  );
 }

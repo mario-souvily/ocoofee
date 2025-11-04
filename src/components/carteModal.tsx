@@ -78,8 +78,11 @@ const CarteModal = ({ cardModalOpen, handleCardOpen }: Props) => {
                   {formatPrice(totalPrice)}€
                 </span>
               </div>
+              {/* ajouter un formulaire pour la commande  et valider la commande*/}
+
               <button className="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-lg font-semibold">
-                Commander
+                Valider la commande
+
               </button>
             </div>
           )}
