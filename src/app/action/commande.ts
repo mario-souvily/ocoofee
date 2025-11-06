@@ -50,6 +50,40 @@ export async function addToCart(
     });
   }
 }
+// fonction pour mettre à jour la quantité d'un produit dans le panier
+export async function updateCartItemQuantity(cafeId: number, quantite: number) {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Utilisateur non connecté");
+
+  const cart = await prisma.cart.findFirst({
+    where: { userId: userId },
+  });
+
+  if (!cart) throw new Error("Aucun panier trouvé");
+
+  const cartItem = await prisma.cartItem.findFirst({
+    where: {
+      cartId: cart.id,
+      cafeId,
+    },
+  });
+
+  if (!cartItem) throw new Error("Produit non trouvé dans le panier");
+
+  if (quantite <= 0) {
+    // Supprimer le produit si la quantité est 0 ou négative
+    await prisma.cartItem.delete({
+      where: { id: cartItem.id },
+    });
+  } else {
+    // Mettre à jour la quantité
+    await prisma.cartItem.update({
+      where: { id: cartItem.id },
+      data: { quantite },
+    });
+  }
+}
+
 // fonction pour supprimer un produit du panier
 export async function removeFromCartDB(cafeId: number) {
   const { userId } = await auth();
@@ -84,7 +118,7 @@ export async function validateCommande(adresse: string) {
   }
   //recuperer le panier de l'utilisateur
   const cart = await prisma.cart.findFirst({
-    where: { user: { clerkId: userId } },
+    where: { userId: userId },
     include: { items: true },
   });
 
@@ -156,12 +190,13 @@ export async function getCartFromDB(): Promise<
       id: item.cafe.id as number,
       nom: item.cafe.nom,
       prix: item.cafe.prix as number,
-      quantite: item.quantite.toString(),
+      quantite: item.cafe.quantite, // Quantité du produit (ex: "250g", "500g")
       image: item.cafe.image,
       type: item.cafe.type as string,
       origine: item.cafe.origine as string,
       description: item.cafe.description as string,
       categorie: (item.cafe as ICoffee).categorie as string,
+      quantityInCart: item.quantite, // Quantité dans le panier (nombre d'articles)
     })
   );
 }

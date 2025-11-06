@@ -12,11 +12,17 @@ interface Props {
 
 const CarteModal = ({ cardModalOpen, handleCardOpen }: Props) => {
   const { products, incrementquantity, decrementquantity, removeitem } = useProduct();
+  console.log("mes produits22", products);
 
-  const totalItems = products.reduce((sum, product) => sum + (product.quantityInCart || 0), 0);
-  const totalPrice = products.reduce((sum, product) =>
-    sum + (product.prix * (product.quantityInCart || 0)), 0
-  );
+  const totalItems = products.reduce((sum, product) => {
+    return sum + (product.quantityInCart || 0);
+  }, 0);
+
+  const totalPrice = products.reduce((sum, product) => {
+    return sum + (product.prix * (product.quantityInCart || 0));
+  }, 0);
+
+
 
   return (
     <div>
@@ -40,7 +46,12 @@ const CarteModal = ({ cardModalOpen, handleCardOpen }: Props) => {
                   <div className="flex-1">
                     <h3 className="font-semibold text-amber-800">{product.nom}</h3>
                     <ImageComponent src={product.image} width={100} height={100} alt={product.nom} />
-                    <p className="text-sm text-gray-600">{product.quantite} - {formatPrice(product.prix)}€ </p>
+                    <p className="text-sm text-gray-600">
+                      {product.quantite} - {formatPrice(product.prix)}€
+                    </p>
+                    <p className="text-xs text-amber-700 font-medium mt-1">
+                      Quantité: {product.quantityInCart || 0}  total prix : {formatPrice((product.quantityInCart || 0) * product.prix)}€
+                    </p>
                   </div>
                   <div className="flex items-center space-x-2">
                     <button

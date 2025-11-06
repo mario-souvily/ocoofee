@@ -2,14 +2,14 @@
 
 import { ICoffee, ICoffeegrain, ICoffeemoulu } from "@/@types/index";
 import { createContext, useContext, useEffect, useState } from "react";
-import { addToCart as addToCartDB, getCartFromDB } from "../action/commande";
+import { addToCart as addToCartDB, getCartFromDB, removeFromCartDB, updateCartItemQuantity } from "../action/commande";
 
 interface IProductContext {
   products: ICoffee[] | ICoffeegrain[] | ICoffeemoulu[];
-  addToCart: (product: ICoffee | ICoffeegrain | ICoffeemoulu) => void;
-  decrementquantity: (id: number) => void;
-  incrementquantity: (id: number) => void;
-  removeitem: (id: number) => void;
+  addToCart: (product: ICoffee | ICoffeegrain | ICoffeemoulu) => Promise<void>;
+  decrementquantity: (id: number) => Promise<void>;
+  incrementquantity: (id: number) => Promise<void>;
+  removeitem: (id: number) => Promise<void>;
   setCarte: (carte: ICoffee[] | ICoffeegrain[] | ICoffeemoulu[]) => void;
 }
 interface productProviderProps {
@@ -35,54 +35,57 @@ export const ProductProvider: React.FC<productProviderProps> = ({ children }) =>
     fetchCartFromDB();
   }, []);
   const addToCart = async (product: ICoffee | ICoffeegrain | ICoffeemoulu) => {
-    const existingProductIndex = products.findIndex(p => p.id === product.id);
-    // si le produit existe deja dans le panier, on incremente la quantite dans le panier
-    if (existingProductIndex !== -1) {
-      // Produit déjà dans le panier, incrémenter la quantité dans le panier
-      const updatedProducts = [...products];
-      if (updatedProducts[existingProductIndex]) {
-        updatedProducts[existingProductIndex]!.quantityInCart = (updatedProducts[existingProductIndex]!.quantityInCart || 0) + 1;
-      }
-      setProducts(updatedProducts);
-    } else {
-      // Nouveau produit, l'ajouter avec quantityInCart = 1
-      const productWithCartQuantity = { ...product, quantityInCart: 1 };
-      setProducts([...products, productWithCartQuantity]);
-    }
     try {
       // ajouter le produit au panier dans la base de donnees
       await addToCartDB(product.id, 1, product.prix);
+      // Recharger le panier depuis la base de données pour être synchronisé
+      const updatedProducts = await getCartFromDB();
+      setProducts(updatedProducts);
     } catch (error) {
       console.error("Erreur lors de l'ajout du produit au panier", error);
     }
   };
 
   // pour decrementer la quantite d'un produit dans le panier
-  const decrementquantity = (id: number) => {
-    const updatedProducts = products.map(product => {
-      if (product.id === id) {
-        const newCartQuantity = (product.quantityInCart || 0) - 1;
-        if (newCartQuantity <= 0) {
-          return null; // Supprimer du panier si quantité = 0
-        }
-        return { ...product, quantityInCart: newCartQuantity };
-      }
-      return product;
-    }).filter(product => product !== null) as ICoffee[] | ICoffeegrain[] | ICoffeemoulu[];
+  const decrementquantity = async (id: number) => {
+    const product = products.find(p => p.id === id);
+    if (!product) return;
 
-    setProducts(updatedProducts);
+    const newCartQuantity = (product.quantityInCart || 0) - 1;
+    try {
+      await updateCartItemQuantity(id, newCartQuantity);
+      // Recharger le panier depuis la base de données pour être synchronisé
+      const updatedProducts = await getCartFromDB();
+      setProducts(updatedProducts);
+    } catch (error) {
+      console.error("Erreur lors de la décrémentation de la quantité", error);
+    }
   };
   // pour incrementer la quantite d'un produit dans le panier
-  const incrementquantity = (id: number) => {
-    setProducts(products.map(product =>
-      product.id === id
-        ? { ...product, quantityInCart: (product.quantityInCart || 0) + 1 }
-        : product
-    ));
+  const incrementquantity = async (id: number) => {
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+
+    const newCartQuantity = (product.quantityInCart || 0) + 1;
+    try {
+      await updateCartItemQuantity(id, newCartQuantity);
+      // Recharger le panier depuis la base de données pour être synchronisé
+      const updatedProducts = await getCartFromDB();
+      setProducts(updatedProducts);
+    } catch (error) {
+      console.error("Erreur lors de l'incrémentation de la quantité", error);
+    }
   };
   // pour supprimer un produit du panier
-  const removeitem = (id: number) => {
-    setProducts(products.filter(product => product.id !== id));
+  const removeitem = async (id: number) => {
+    try {
+      await removeFromCartDB(id);
+      // Recharger le panier depuis la base de données pour être synchronisé
+      const updatedProducts = await getCartFromDB();
+      setProducts(updatedProducts);
+    } catch (error) {
+      console.error("Erreur lors de la suppression du produit", error);
+    }
   };
   // retourner les produits du panier
   return <ProductContext.Provider value={{ products, addToCart, decrementquantity, incrementquantity, removeitem, setCarte: setProducts }}>{children}</ProductContext.Provider>;

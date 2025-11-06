@@ -21,7 +21,9 @@ export default function Navbar() {
     setCardModalOpen(!cardModalOpen)
   }
   const { products } = useProduct();
-  const totalQuantity = products.reduce((acc, product) => acc + (product.quantityInCart || 0), 0);
+  const totalItems = products.reduce((sum, product) => {
+    return sum + (product.quantityInCart || 0);
+  }, 0);
 
   const [links] = useState<{ name: string; href: string }[]>([
     { name: "Accueil", href: "/" },
@@ -120,7 +122,7 @@ export default function Navbar() {
                 onClick={handleCardOpen}
                 className="bg-amber-900 shadow-lg hover:bg-amber-600 text-white px-4 py-2 rounded-full transition-colors flex items-center gap-2 relative"
               >
-                <span className="absolute top-0 right-0 bg-amber-600 text-white px-2 py-1 rounded-full text-xs">{totalQuantity}</span>
+                <span className="absolute top-0 right-0 bg-amber-600 text-white px-2 py-1 rounded-full text-xs">{totalItems}</span>
                 <FaShoppingCart size={30} />
               </button>
             </div>
@@ -181,7 +183,7 @@ export default function Navbar() {
                     onClick={handleCardOpen}
                     className=" text-white px-1 py-3 rounded-full transition-colors text-center font-medium mt-4 relative"
                   >
-                    <span className="absolute top-0 right-0 bg-amber-600 text-white px-2 py-1 rounded-full text-xs">{totalQuantity}</span>
+                    <span className="absolute top-0 right-0 bg-amber-600 text-white px-2 py-1 rounded-full text-xs">{totalItems}</span>
                     <FaShoppingCart size={30} />
 
                   </Link>
