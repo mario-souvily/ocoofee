@@ -2,6 +2,33 @@ import { prisma } from "@/lib/prisma";
 import { isEmail, isStrongPass, sanitizeUser } from "@/lib/utils";
 import argon2 from "argon2";
 
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Récupère tous les utilisateurs
+ *     description: Retourne la liste complète des utilisateurs inscrits
+ *     tags: [Users]
+ *     security:
+ *       - ClerkAuth: []
+ *     responses:
+ *       200:
+ *         description: Liste des utilisateurs récupérée avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ *       401:
+ *         description: utilisateur non autorisé
+ *       500:
+ *         description: Erreur serveur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 // Cette fonction GET permet de récupérer tous les utilisateurs de la base de données via Prisma.
 // Elle retourne un objet JSON contenant la liste des utilisateurs si elle existe, sinon une erreur 404.
 export async function GET() {
@@ -14,6 +41,37 @@ export async function GET() {
 
 // Cette fonction POST permet de créer un nouvel utilisateur dans la base de données via Prisma.
 // Elle retourne un objet JSON contenant le nouvel utilisateur si la création réussit, sinon une erreur 400.
+
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     summary: Crée un nouvel utilisateur
+ *     description: Crée un nouvel utilisateur dans la base de données via Prisma.
+ *     tags: [Users]
+ *     security:
+ *       - ClerkAuth: []
+ *     responses:
+ *       201:
+ *         description: Nouvel utilisateur créé avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Erreur de validation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       409:
+ *         description: Email déjà utilisé
+ *         content:
+ *           application/json:
+ * 
+ * 
+ * 
+*/
 export async function POST(req: Request) {
   try {
     const { prenom, nom, email, clerkId } = await req.json();
