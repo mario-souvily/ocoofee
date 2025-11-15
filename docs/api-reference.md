@@ -5,6 +5,7 @@
 - **Stack** : Next.js (App Router) · React 19 · TypeScript 5 · Prisma/PostgreSQL · Clerk (auth) · EmailJS · Tailwind/shadcn.
 - **Organisation** : les routes HTTP vivent sous `src/app/api`, les *server actions* sous `src/app/action`, les composants partagés sous `src/components` et `src/app/Context`.
 - **Conventions** : types stricts, composants fonctionnels, code client marqué `"use client"` si nécessaire. Les identifiants Clerk (hashés) font office de mot de passe local.
+- **Maintenance** : mettre à jour ce document immédiatement dès qu’une nouvelle route API, action serveur, fonction utilitaire ou composant public est ajouté ou modifié.
 
 ---
 
