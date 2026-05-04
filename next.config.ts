@@ -38,13 +38,13 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value:
               "default-src 'self' blob: data: https:; " +
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://*.clerk.dev https://*.clerk.accounts.dev https://accounts.google.com https://www.gstatic.com data:; " +
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://*.clerk.dev https://*.clerk.accounts.dev https://accounts.google.com https://www.gstatic.com https://js.stripe.com data:; " +
               "worker-src 'self' blob:; " +
-              "connect-src 'self' https://*.clerk.dev https://*.clerk.accounts.dev https://accounts.google.com https://www.googleapis.com  https://api.emailjs.com https://clerk-telemetry.com wss: ws:; " +
+              "connect-src 'self' https://*.clerk.dev https://*.clerk.accounts.dev https://accounts.google.com https://www.googleapis.com  https://api.emailjs.com https://clerk-telemetry.com https://api.stripe.com https://maps.googleapis.com wss: ws:; " +
               "img-src 'self' data: https: blob:; " +
               "font-src 'self' https: data:; " +
               "style-src 'self' 'unsafe-inline' https:; " +
-              "frame-src 'self' https://accounts.google.com https://*.clerk.dev https://*.clerk.accounts.dev; "
+              "frame-src 'self' https://accounts.google.com https://*.clerk.dev https://*.clerk.accounts.dev https://js.stripe.com https://hooks.stripe.com; "
                 .replace(/\s+/g, " ")
                 .trim(),
           },

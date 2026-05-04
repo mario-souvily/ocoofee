@@ -23,6 +23,8 @@
     "@radix-ui/react-navigation-menu": "^1.2.14",
     "@radix-ui/react-slot": "^1.2.3",
     "@react-icons/all-files": "^4.1.0",
+    "@stripe/react-stripe-js": "^6.3.0",
+    "@stripe/stripe-js": "^9.4.0",
     "@supabase/supabase-js": "^2.57.0",
     "argon2": "^0.44.0",
     "class-variance-authority": "^0.7.1",
@@ -34,6 +36,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0",
+    "stripe": "^22.1.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "swagger-ui-react": "^5.30.2",
@@ -53,5 +56,9 @@
     "tsx": "^4.20.5",
     "tw-animate-css": "^1.3.7",
     "typescript": "^5"
+  },
+  "optionalDependencies": {
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.2.4",
+    "lightningcss-linux-x64-gnu": "^1.32.0"
   }
 }
