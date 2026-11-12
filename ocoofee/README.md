@@ -39,17 +39,13 @@ npx prisma db seed
 
 ## Documentation
 
-[Documentation]
-
-https://nextjs.org/docs
-
-https://www.prisma.io/docs
-
-https://clerk.com/
-
-https://supabase.com/
-
-https://react.dev/
+- [Documentation API & composants du projet](../docs/api-reference.md) ← à consulter pour les routes REST, server actions, composants partagés et exemples d’usage.  
+- Références externes :
+  - https://nextjs.org/docs
+  - https://www.prisma.io/docs
+  - https://clerk.com/
+  - https://supabase.com/
+  - https://react.dev/
 
 ## 
 1. Authentification
