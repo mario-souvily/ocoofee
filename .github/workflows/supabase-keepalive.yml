@@ -1,0 +1,100 @@
+name: Supabase Keep-Alive
+
+# Supabase (plan free) met un projet EN PAUSE apres 7 jours sans activite.
+# Ce workflow ouvre une connexion a la base une fois par jour pour que le
+# compteur d'inactivite ne depasse jamais 7 jours.
+#
+# Prerequis (une seule fois) :
+#   1. Ajouter le secret SUPABASE_PING_URL dans
+#      Settings > Secrets and variables > Actions du depot GitHub.
+#      Valeur = la chaine DIRECT_URL du .env (pooler port 5432, sans ?pgbouncer=true).
+#   2. Ce fichier doit etre present sur la branche par defaut (main) :
+#      GitHub ne declenche les workflows planifies que depuis la branche par defaut.
+#
+# Voir SUPABASE_KEEPALIVE.md pour le detail.
+
+on:
+  schedule:
+    # Tous les jours a 06:17 UTC (on evite les heures pile, surchargees chez GitHub).
+    - cron: "17 6 * * *"
+  # Permet de lancer le ping a la main depuis l'onglet Actions (utile pour tester).
+  workflow_dispatch:
+
+# Un seul ping a la fois.
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: false
+
+permissions:
+  # Necessaire pour le commit "anti-desactivation" du dernier step.
+  contents: write
+
+jobs:
+  ping:
+    name: Ping de la base Supabase
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Recuperation du depot
+        uses: actions/checkout@v4
+
+      - name: Ping de la base (SELECT 1)
+        env:
+          # GitHub masque automatiquement la valeur du secret dans les logs.
+          PING_URL: ${{ secrets.SUPABASE_PING_URL }}
+        run: |
+          set -u
+          if [ -z "${PING_URL}" ]; then
+            echo "::error::Le secret SUPABASE_PING_URL n'est pas configure. Voir SUPABASE_KEEPALIVE.md."
+            exit 1
+          fi
+
+          # psql est normalement pre-installe sur ubuntu-latest ; filet de securite
+          # au cas ou l'image du runner changerait un jour.
+          if ! command -v psql >/dev/null 2>&1; then
+            echo "psql absent de l'image, installation du client postgresql..."
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+
+          # 3 tentatives : une base qui sort de veille peut mettre quelques secondes a repondre.
+          for attempt in 1 2 3; do
+            echo "--- Tentative ${attempt}/3 ---"
+            if psql "${PING_URL}" -v ON_ERROR_STOP=1 -At \
+                 -c "select 'pong ' || now() at time zone 'Europe/Paris';"; then
+              echo "Ping reussi : la base est active, le compteur d'inactivite Supabase est remis a zero."
+              exit 0
+            fi
+            if [ "${attempt}" -lt 3 ]; then
+              echo "Echec, nouvelle tentative dans 30 s..."
+              sleep 30
+            fi
+          done
+
+          echo "::error::Les 3 tentatives ont echoue. Causes probables : (1) le projet Supabase est deja EN PAUSE et doit etre relance a la main depuis le dashboard Supabase (un ping ne reveille pas un projet en pause), (2) le mot de passe de la base a change et le secret SUPABASE_PING_URL est obsolete."
+          exit 1
+
+      # Depot public : GitHub desactive un workflow planifie apres 60 jours
+      # sans activite sur le depot. On pousse un commit minuscule uniquement
+      # si le depot est reste muet 45 jours, histoire de relancer ce compteur.
+      - name: Maintien du cron actif (si depot inactif depuis 45 jours)
+        if: always() && github.event_name == 'schedule'
+        run: |
+          set -eu
+          last_commit=$(git log -1 --format=%ct)
+          age_days=$(( ( $(date +%s) - last_commit ) / 86400 ))
+          echo "Dernier commit sur $(git rev-parse --abbrev-ref HEAD) : il y a ${age_days} jour(s)."
+
+          if [ "${age_days}" -lt 45 ]; then
+            echo "Depot actif, aucun commit de maintien necessaire."
+            exit 0
+          fi
+
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > .github/keepalive.txt
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/keepalive.txt
+          git commit -m "chore: maintien du cron supabase-keepalive actif"
+          git push
+          echo "Commit de maintien pousse : le compteur des 60 jours de GitHub repart."
